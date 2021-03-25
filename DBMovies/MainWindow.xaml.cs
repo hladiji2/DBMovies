@@ -38,7 +38,7 @@ namespace DBMovies
             Hide();
             // Připojení do databáze
             cnn = new SqlConnection();
-            access_Window = new Access_Window();
+            access_Window = new Access_Window(this);
             access_Window.ResizeMode = ResizeMode.NoResize;
             access_Window.Show();
             
@@ -50,8 +50,11 @@ namespace DBMovies
         {
             try
             {
-                // Potřebuju Connection String
-                string cnns = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=MovieDB;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
+                // Potřebuju Connection String PC
+                //string cnns = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=MovieDB;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
+                
+                // Potřebuju Connection String NTB
+                string cnns = @"Data Source = (localdb)\MSSQLLocalDB; Initial Catalog = MovieDB; Integrated Security = True; Connect Timeout = 30; Encrypt = False; TrustServerCertificate = False; ApplicationIntent = ReadWrite; MultiSubnetFailover = False";
                 // Připojím string k objektu connection
                 cnn.ConnectionString = cnns;
                 // Pokusím se připojit k DB
@@ -66,6 +69,16 @@ namespace DBMovies
                 return false;
             }
         } 
+
+        private void Add_Movie(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Delete_Movie(object sender, RoutedEventArgs e)
+        {
+
+        }
 
     }
 }

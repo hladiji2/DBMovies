@@ -38,11 +38,39 @@ namespace DBMovies
             // aktualizace databáze komentářů
         }
         
-        private void Rate_MovieCombo()
+        private void Rate_MovieCombo(object sender, SelectionChangedEventArgs e)
         {
             // Při změně hodnocení v ComboBoxu
-            // 
-            ComboBox.
+            int rating = (int)cmbRating.SelectedItem;
+            if (rating >= 0 && rating <= 10) 
+                changeRateCombo(rating);
+            // TODO
+            else throw new Exception();
+        }
+
+        private void changeRateCombo(int changedRating)
+        {
+
+        }
+
+        private void Delete_Movie(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Add_Comment(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Delete_Comment(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Admin_Report(object sender, RoutedEventArgs e)
+        {
+
         }
 
     }

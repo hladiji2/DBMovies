@@ -19,15 +19,17 @@ namespace DBMovies
     /// </summary>
     public partial class Access_Window : Window
     {
-        public Access_Window()
+        MainWindow mainWindow;
+        public Access_Window(MainWindow main)
         {
             InitializeComponent();
+            mainWindow = main;
         }
 
         public static bool userExists;
         public static byte userPrivileges;
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void Authorize(object sender, RoutedEventArgs e)
         {
             /* TODO
              * Pokud existuje uživatel se správným loginem/heslem v databázi, vrátí true 
@@ -38,6 +40,7 @@ namespace DBMovies
             {
                 userExists = true;
                 Close();
+                mainWindow.Show();
             }
             else
             {
