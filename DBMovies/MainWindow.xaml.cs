@@ -38,18 +38,7 @@ namespace DBMovies
             access_Window = new Access_Window(this);
         }
 
-        public bool isDBConnected(string cnns)
-        {
-            using (SqlConnection cnn = new SqlConnection(cnns))
-            {
-                cnn.Open();
-                if (cnn.State == ConnectionState.Open)
-                    return true;
-                else
-                    return false;
-            }
-        }
-
+        
         private void addMovie(object sender, RoutedEventArgs e)
         {
 

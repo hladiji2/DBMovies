@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
@@ -30,8 +31,19 @@ namespace DBMovies
 
             ResizeMode = ResizeMode.NoResize;
             Show();
-            if (mainWindow.isDBConnected(mainWindow.cnns))
+            if (isDBConnected(mainWindow.cnns))
                 status.Background = Brushes.Green;
+        }
+        public bool isDBConnected(string cnns)
+        {
+            using (SqlConnection cnn = new SqlConnection(cnns))
+            {
+                cnn.Open();
+                if (cnn.State == ConnectionState.Open)
+                    return true;
+                else
+                    return false;
+            }
         }
 
         private void authorize(object sender, RoutedEventArgs e)
