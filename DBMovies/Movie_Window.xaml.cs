@@ -19,14 +19,11 @@ namespace DBMovies
     /// </summary>
     public partial class Movie_Window : Window
     {
-        public Movie_Window()
+        MainWindow mainWindow;
+        public Movie_Window(MainWindow mainWindow)
         {
             InitializeComponent();
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-
+            this.mainWindow = mainWindow;
         }
 
         private void Add_Comment()

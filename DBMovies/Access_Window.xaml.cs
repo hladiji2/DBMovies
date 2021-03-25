@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,43 +21,71 @@ namespace DBMovies
     public partial class Access_Window : Window
     {
         MainWindow mainWindow;
-        public Access_Window(MainWindow main)
+        public Access_Window(MainWindow mainWindow)
         {
             InitializeComponent();
-            mainWindow = main;
+            this.mainWindow = mainWindow;
+            // Skrýt hlavní okno pro autorizaci
+            mainWindow.Hide();
+
+            ResizeMode = ResizeMode.NoResize;
+            Show();
+            if (mainWindow.isDBConnected(mainWindow.cnns))
+                status.Background = Brushes.Green;
         }
 
-        public static bool userExists;
-        public static byte userPrivileges;
-
-        private void Authorize(object sender, RoutedEventArgs e)
+        private void authorize(object sender, RoutedEventArgs e)
         {
-            /* TODO
-             * Pokud existuje uživatel se správným loginem/heslem v databázi, vrátí true 
-            if (txtUser == .... && txtPass == ....)
-                ...
-             */
-            if (true)
+            object[] userData = getUserDataIfExists(txtUserLogin.Text, txtUserPassword.Password);
+
+            if (userData.GetValue(0) != null)
             {
-                userExists = true;
+                //TODO předat informace o uživateli Hlavnímu oknu
+                switch (userData.GetValue(0))
+                {
+                    case 0: mainWindow.txtUserMode.Text = "Admin"; break;
+                    case 1: mainWindow.txtUserMode.Text = "Moderator"; break;
+                    case 2: mainWindow.txtUserMode.Text = "Uživatel"; break;
+                }
+                mainWindow.txtUserLogin.Text = txtUserLogin.Text;
+
                 Close();
                 mainWindow.Show();
             }
             else
             {
-                txtUser.Text = "";
-                txtPass.Password = "";
-                MessageBox.Show("Wrong Password or Username");
+                txtUserLogin.Text = "";
+                txtUserPassword.Password = "";
+                MessageBox.Show("Wrong username or password.\nPlease try again.","FAIL");
             }
         }
 
-        private void AW_Closed(object sender, EventArgs e)
+        //TODO
+        private object[] getUserDataIfExists(string userName, string password)
         {
-            // TODO
-            // Zjisti správné oprávnění pro uživatele (Správce, Mod, Uživatel)
-            // userPrivileges == GET FROM DATABASE
-            userPrivileges = 0;
-        }
+            // PRO TEST
+            // return new object[4];
+            using (SqlConnection connection = new SqlConnection(mainWindow.cnns))
+            {
+                connection.Open();
+                string SELECT = @"SELECT * FROM !!! WHERE !!!=" + userName + " AND !!!=" + password;
+                // TODO              ??počet sloupců dat??
+                object[] userData = new object[4];
 
+                using (SqlCommand command = new SqlCommand(SELECT, connection))
+                {
+                    SqlDataReader dataReader = command.ExecuteReader();
+
+                    while (dataReader.Read())
+                    {
+                        // TODO              ??počet sloupců dat??
+                        userData[0] = dataReader.GetValue(0);
+                        userData[1] = dataReader.GetValue(1);
+                        userData[2] = dataReader.GetValue(2);
+                    }
+                }
+                return userData;
+            }
+        }
     }
 }

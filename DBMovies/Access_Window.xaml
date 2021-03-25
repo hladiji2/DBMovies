@@ -1,4 +1,4 @@
-﻿<Window x:Class="DBMovies.Access_Window" Closed="AW_Closed"
+﻿<Window x:Class="DBMovies.Access_Window"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -9,9 +9,9 @@
     <Grid>
         <Label Content="Username" HorizontalAlignment="Center" Margin="8,7,0,0" VerticalAlignment="Top"/>
         <Label Content="Password" HorizontalAlignment="Center" Margin="8,59,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="txtUser" HorizontalAlignment="Center" Height="23" Margin="10,33,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-        <PasswordBox x:Name="txtPass" HorizontalAlignment="Center" Height="23" Margin="10,90,0,0" VerticalAlignment="Top" Width="120"/>
-        <Button x:Name="BtnAuthorize" Content="Authorize" HorizontalAlignment="Center" VerticalAlignment="Bottom" Width="74" Click="Authorize" Margin="84,0,84,12"/>
+        <TextBox x:Name="txtUserLogin" HorizontalAlignment="Center" Height="23" Margin="10,33,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <PasswordBox x:Name="txtUserPassword" HorizontalAlignment="Center" Height="23" Margin="10,90,0,0" VerticalAlignment="Top" Width="120"/>
+        <Button Content="Authorize" HorizontalAlignment="Center" VerticalAlignment="Bottom" Width="74" Click="authorize" Margin="84,0,84,12"/>
         <StatusBar x:Name="status" HorizontalAlignment="Left" Height="11" Margin="221,10,0,0" VerticalAlignment="Top" Width="11" RenderTransformOrigin="0.939,-10.121" Background="Red"/>
     </Grid>
 </Window>

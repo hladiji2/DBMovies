@@ -8,10 +8,10 @@
         Title="Hlavni_Stranka" Height="450" Width="800">
 
     <Grid>
-        <TextBox HorizontalAlignment="Left" Height="23" Margin="10,10,0,0" TextWrapping="Wrap" Text="Režim uživatele" VerticalAlignment="Top" Width="120" IsReadOnly="True"/>
-        <TextBox HorizontalAlignment="Left" Height="23" Margin="10,38,0,0" TextWrapping="Wrap" Text="Přihlašovací jméno" VerticalAlignment="Top" Width="120" IsReadOnly="True"/>
-        <Button Content="+" HorizontalAlignment="Left" Margin="732,20,0,0" VerticalAlignment="Top" Width="20" Click="Add_Movie"/>
-        <Button Content="-" HorizontalAlignment="Left" Margin="757,20,-40,0" VerticalAlignment="Top" Width="20"  Click="Delete_Movie"/>
+        <TextBox x:Name="txtUserMode" HorizontalAlignment="Left" Height="23" Margin="10,10,0,0" TextWrapping="Wrap" Text="Režim uživatele" VerticalAlignment="Top" Width="120" IsReadOnly="True"/>
+        <TextBox x:Name="txtUserLogin" HorizontalAlignment="Left" Height="23" Margin="10,38,0,0" TextWrapping="Wrap" Text="Přihlašovací jméno" VerticalAlignment="Top" Width="120" IsReadOnly="True"/>
+        <Button Content="+" HorizontalAlignment="Left" Margin="732,20,0,0" VerticalAlignment="Top" Width="20" Click="addMovie"/>
+        <Button Content="-" HorizontalAlignment="Left" Margin="757,20,-40,0" VerticalAlignment="Top" Width="20"  Click="deleteMovie"/>
         
         <Border BorderBrush="Black" BorderThickness="2" Height="350" VerticalAlignment="Bottom">
             <ItemsControl x:Name="Movies" Grid.Row="0">
