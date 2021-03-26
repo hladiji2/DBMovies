@@ -13,18 +13,23 @@
         <Button Content="+" HorizontalAlignment="Left" Margin="732,20,0,0" VerticalAlignment="Top" Width="20" Click="addMovie"/>
         <Button Content="-" HorizontalAlignment="Left" Margin="757,20,-40,0" VerticalAlignment="Top" Width="20"  Click="deleteMovie"/>
         
-        <Border BorderBrush="Black" BorderThickness="2" Height="350" VerticalAlignment="Bottom">
-            <ItemsControl x:Name="Movies" Grid.Row="0">
-                <ItemsControl.ItemTemplate>
+        <Border BorderBrush="Black" BorderThickness="2" Height="340" VerticalAlignment="Bottom">
+            <!-- https://wpf.2000things.com/2011/10/04/400-using-a-wrappanel-as-the-items-panel-for-a-listbox/ -->
+            <ListBox ItemsSource="{Binding MovieList}" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                <ListBox.ItemTemplate>
                     <DataTemplate>
-                        <Border BorderBrush="Gold" BorderThickness="1" Margin="10" Padding="10">
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="{Binding Name}" />
-                            </StackPanel>
-                        </Border>
+                        <StackPanel Orientation="Vertical">
+                            <Image Source="{Binding Image}" Stretch="None"/>
+                            <Label Content="{Binding TitleWithYear}"/>
+                        </StackPanel>
                     </DataTemplate>
-                </ItemsControl.ItemTemplate>
-            </ItemsControl>
+                </ListBox.ItemTemplate>
+                <ListBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel IsItemsHost="True" Orientation="Horizontal"  />
+                    </ItemsPanelTemplate>
+                </ListBox.ItemsPanel>
+            </ListBox>
         </Border>
     </Grid>
 </Window>

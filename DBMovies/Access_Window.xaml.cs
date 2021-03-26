@@ -76,7 +76,7 @@ namespace DBMovies
         private object[] getUserDataIfExists(string userName, string password)
         {
             // PRO TEST
-            // return new object[4];
+            return new object[4];
             using (SqlConnection connection = new SqlConnection(mainWindow.cnns))
             {
                 connection.Open();

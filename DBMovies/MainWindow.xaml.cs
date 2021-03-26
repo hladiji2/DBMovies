@@ -35,7 +35,7 @@ namespace DBMovies
 
         void start()
         {
-            access_Window = new Access_Window(this);
+            //access_Window = new Access_Window(this);
         }
 
         
