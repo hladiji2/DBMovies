@@ -21,15 +21,15 @@ namespace DBMovies
     /// </summary>
     public partial class Access_Window : Window
     {
-        MainWindow mainWindow;
+        private MainWindow mainWindow;
+        public bool mainWindowAccessed { get; private set; }
         public Access_Window(MainWindow mainWindow)
         {
             InitializeComponent();
             this.mainWindow = mainWindow;
-            // Skrýt hlavní okno pro autorizaci
-            mainWindow.Hide();
-
+            mainWindowAccessed = false;
             ResizeMode = ResizeMode.NoResize;
+
             Show();
             if (isDBConnected(mainWindow.cnns))
                 status.Background = Brushes.Green;
@@ -52,7 +52,7 @@ namespace DBMovies
 
             if (userData.GetValue(0) != null)
             {
-                //TODO předat informace o uživateli Hlavnímu oknu
+                //TODO SWITCH předat informace o uživateli Hlavnímu oknu
                 switch (userData.GetValue(0))
                 {
                     case 0: mainWindow.txtUserMode.Text = "Admin"; break;
@@ -60,8 +60,9 @@ namespace DBMovies
                     case 2: mainWindow.txtUserMode.Text = "Uživatel"; break;
                 }
                 mainWindow.txtUserLogin.Text = txtUserLogin.Text;
+                mainWindowAccessed = true;
 
-                Close();
+                Hide();
                 mainWindow.Show();
             }
             else
@@ -81,7 +82,7 @@ namespace DBMovies
             {
                 connection.Open();
                 string SELECT = @"SELECT * FROM !!! WHERE !!!=" + userName + " AND !!!=" + password;
-                // TODO              ??počet sloupců dat??
+                // TODO              ??počet sloupců dat uživatele??
                 object[] userData = new object[4];
 
                 using (SqlCommand command = new SqlCommand(SELECT, connection))
@@ -90,7 +91,7 @@ namespace DBMovies
 
                     while (dataReader.Read())
                     {
-                        // TODO              ??počet sloupců dat??
+                        // TODO       ??počet sloupců dat uživatele??
                         userData[0] = dataReader.GetValue(0);
                         userData[1] = dataReader.GetValue(1);
                         userData[2] = dataReader.GetValue(2);
@@ -99,5 +100,28 @@ namespace DBMovies
                 return userData;
             }
         }
+        /// <summary>
+        /// Metoda pro zajištění přístupu do oken
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Window_Closed(object sender, EventArgs e)
+        {
+            // Pokud nebylo zpřístupněno hlavní okno přes autorizaci, tak manuálně vypne Hlavní okno a tím i celou aplikaci
+            // Pokud bylo zpřístupněno ==>
+            // TODO na zajištění tlačítka pro autorizaci jiného uživatele, ať není nutno restartovat aplikaci
+            if (!mainWindowAccessed)
+                mainWindow.Close();
+            else
+                mainWindow.Show();
+        }
+
+        private void closeApp(object sender, RoutedEventArgs e)
+        {
+            mainWindowAccessed = false;
+            Close();
+        }
+
+        
     }
 }

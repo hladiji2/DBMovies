@@ -14,6 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Data.SqlClient;
+using System.ComponentModel;
 
 namespace DBMovies
 {
@@ -35,7 +36,9 @@ namespace DBMovies
 
         void start()
         {
-            //access_Window = new Access_Window(this);
+            // Skrýt hlavní okno pro autorizaci
+            Hide();
+            access_Window = new Access_Window(this);
         }
 
         
@@ -49,5 +52,21 @@ namespace DBMovies
 
         }
 
+        /// <summary>
+        /// Metoda pro zajištění přístupu do oken
+        /// </summary>
+        /// <param name="e"></param>
+        protected override void OnClosing(CancelEventArgs e)
+        {
+            // Mění vypínací tlačíko (Právý horní křížek) tak,
+            // že Hlavní okno bude pouze skryto a znovu se zobrazí
+            // Autorizační okno.
+            if (access_Window.mainWindowAccessed)
+            {
+                e.Cancel = true;
+                Hide();
+                access_Window = new Access_Window(this);
+            }
+        }
     }
 }

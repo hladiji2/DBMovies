@@ -5,13 +5,16 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DBMovies"
         mc:Ignorable="d"
-        Title="Authorization" Height="200" Width="250">
+        Title="Authorization" Height="200" Width="250" Closed="Window_Closed">
     <Grid>
         <Label Content="Username" HorizontalAlignment="Center" Margin="8,7,0,0" VerticalAlignment="Top"/>
         <Label Content="Password" HorizontalAlignment="Center" Margin="8,59,0,0" VerticalAlignment="Top"/>
         <TextBox x:Name="txtUserLogin" HorizontalAlignment="Center" Height="23" Margin="10,33,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
         <PasswordBox x:Name="txtUserPassword" HorizontalAlignment="Center" Height="23" Margin="10,90,0,0" VerticalAlignment="Top" Width="120"/>
-        <Button Content="Authorize" HorizontalAlignment="Center" VerticalAlignment="Bottom" Width="74" Click="authorize" Margin="84,0,84,12"/>
+        <WrapPanel HorizontalAlignment="Center" VerticalAlignment="Bottom">
+            <Button Content="Authorize" Width="74" Click="authorize" Margin="10"/>
+            <Button Content="Close App" Width="74" Click="closeApp" Margin="10"/>
+        </WrapPanel>
         <StatusBar x:Name="status" HorizontalAlignment="Left" Height="11" Margin="221,10,0,0" VerticalAlignment="Top" Width="11" RenderTransformOrigin="0.939,-10.121" Background="Red"/>
     </Grid>
 </Window>
