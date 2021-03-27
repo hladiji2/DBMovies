@@ -22,12 +22,10 @@ namespace DBMovies
     public partial class Access_Window : Window
     {
         private MainWindow mainWindow;
-        public bool mainWindowAccessed { get; private set; }
         public Access_Window(MainWindow mainWindow)
         {
             InitializeComponent();
             this.mainWindow = mainWindow;
-            mainWindowAccessed = false;
             ResizeMode = ResizeMode.NoResize;
 
             Show();
@@ -53,14 +51,16 @@ namespace DBMovies
             if (userData.GetValue(0) != null)
             {
                 //TODO SWITCH předat informace o uživateli Hlavnímu oknu
-                switch (userData.GetValue(0))
+                switch ((byte)userData.GetValue(0))
                 {
                     case 0: mainWindow.txtUserMode.Text = "Admin"; break;
                     case 1: mainWindow.txtUserMode.Text = "Moderator"; break;
                     case 2: mainWindow.txtUserMode.Text = "Uživatel"; break;
                 }
                 mainWindow.txtUserLogin.Text = txtUserLogin.Text;
-                mainWindowAccessed = true;
+                mainWindow.wasAccessed = true;
+                //TODO oprávnění a omezení pro ostatní okna
+                mainWindow.privileges = (byte) userData.GetValue(0);
 
                 Hide();
                 mainWindow.Show();
@@ -69,15 +69,13 @@ namespace DBMovies
             {
                 txtUserLogin.Text = "";
                 txtUserPassword.Password = "";
-                MessageBox.Show("Wrong username or password.\nPlease try again.","FAIL");
+                MessageBox.Show("Wrong username or password.\nPlease try again.", "FAIL");
             }
         }
 
         //TODO
         private object[] getUserDataIfExists(string userName, string password)
         {
-            // PRO TEST
-            return new object[4];
             using (SqlConnection connection = new SqlConnection(mainWindow.cnns))
             {
                 connection.Open();
@@ -100,6 +98,7 @@ namespace DBMovies
                 return userData;
             }
         }
+
         /// <summary>
         /// Metoda pro zajištění přístupu do oken
         /// </summary>
@@ -110,7 +109,7 @@ namespace DBMovies
             // Pokud nebylo zpřístupněno hlavní okno přes autorizaci, tak manuálně vypne Hlavní okno a tím i celou aplikaci
             // Pokud bylo zpřístupněno ==>
             // TODO na zajištění tlačítka pro autorizaci jiného uživatele, ať není nutno restartovat aplikaci
-            if (!mainWindowAccessed)
+            if (!mainWindow.wasAccessed)
                 mainWindow.Close();
             else
                 mainWindow.Show();
@@ -118,10 +117,10 @@ namespace DBMovies
 
         private void closeApp(object sender, RoutedEventArgs e)
         {
-            mainWindowAccessed = false;
+            mainWindow.wasAccessed = false;
             Close();
         }
 
-        
+
     }
 }

@@ -15,6 +15,8 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Data.SqlClient;
 using System.ComponentModel;
+using System.Windows.Forms;
+using DBMovies.model;
 
 namespace DBMovies
 {
@@ -26,16 +28,22 @@ namespace DBMovies
         private Access_Window access_Window;
         private Movie_Window movie_Window;
 
+        public bool wasAccessed;
+        public byte privileges;
+
         public string cnns = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=MovieDB;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
 
         public MainWindow()
         {
             InitializeComponent();
             start();
+            Movie m = new Movie("Terminator");
+            m.
         }
 
         void start()
         {
+            wasAccessed = false;
             // Skrýt hlavní okno pro autorizaci
             Hide();
             access_Window = new Access_Window(this);
@@ -43,6 +51,22 @@ namespace DBMovies
 
         
         private void addMovie(object sender, RoutedEventArgs e)
+        {
+            new NewMovieForm();
+        }
+
+        // TODO Zápis nového filmu do databáze
+        /* 
+         * object[0] String     - Název Filmu
+         * object[1] String     - Název Režiséra
+         * object[2] string[]   - Názvy Herců
+         * object[3] string[]   - Názvy Žánrů
+         * object[...] ...     - ...
+         * 
+         * Volá se ve Formuláři NewMovieWindow,
+         * až se nastaví informace o novém filmu.
+        */
+        public void registerMovie(object[] movieData)
         {
 
         }
@@ -52,16 +76,12 @@ namespace DBMovies
 
         }
 
-        /// <summary>
-        /// Metoda pro zajištění přístupu do oken
-        /// </summary>
-        /// <param name="e"></param>
+        // Metoda pro zajištění přístupu do oken
         protected override void OnClosing(CancelEventArgs e)
         {
-            // Mění vypínací tlačíko (Právý horní křížek) tak,
-            // že Hlavní okno bude pouze skryto a znovu se zobrazí
-            // Autorizační okno.
-            if (access_Window.mainWindowAccessed)
+            // Mění vlastnost vypínacího tlačíka (Právý horní křížek) tak,
+            // že Hlavní okno bude pouze skryto a znovu se zobrazí Autorizační okno.
+            if (wasAccessed)
             {
                 e.Cancel = true;
                 Hide();

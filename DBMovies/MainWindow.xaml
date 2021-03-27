@@ -10,6 +10,9 @@
     <Grid>
         <TextBox x:Name="txtUserMode" HorizontalAlignment="Left" Height="23" Margin="10,10,0,0" TextWrapping="Wrap" Text="Režim uživatele" VerticalAlignment="Top" Width="120" IsReadOnly="True"/>
         <TextBox x:Name="txtUserLogin" HorizontalAlignment="Left" Height="23" Margin="10,38,0,0" TextWrapping="Wrap" Text="Přihlašovací jméno" VerticalAlignment="Top" Width="120" IsReadOnly="True"/>
+        <Label Content="Karma:" HorizontalAlignment="Left" Margin="135,10,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="txtKarma" BorderThickness="0"  HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="63" Margin="181,10,0,0" IsReadOnly="True"/>
+        
         <Button Content="+" HorizontalAlignment="Left" Margin="732,20,0,0" VerticalAlignment="Top" Width="20" Click="addMovie"/>
         <Button Content="-" HorizontalAlignment="Left" Margin="757,20,-40,0" VerticalAlignment="Top" Width="20"  Click="deleteMovie"/>
         

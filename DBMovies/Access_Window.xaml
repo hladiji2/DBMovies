@@ -11,9 +11,9 @@
         <Label Content="Password" HorizontalAlignment="Center" Margin="8,59,0,0" VerticalAlignment="Top"/>
         <TextBox x:Name="txtUserLogin" HorizontalAlignment="Center" Height="23" Margin="10,33,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
         <PasswordBox x:Name="txtUserPassword" HorizontalAlignment="Center" Height="23" Margin="10,90,0,0" VerticalAlignment="Top" Width="120"/>
-        <WrapPanel HorizontalAlignment="Center" VerticalAlignment="Bottom">
-            <Button Content="Authorize" Width="74" Click="authorize" Margin="10"/>
-            <Button Content="Close App" Width="74" Click="closeApp" Margin="10"/>
+        <WrapPanel HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="15">
+            <Button Content="Authorize" Width="74" Click="authorize" Margin="5"/>
+            <Button Content="Close App" Width="74" Click="closeApp" Margin="5"/>
         </WrapPanel>
         <StatusBar x:Name="status" HorizontalAlignment="Left" Height="11" Margin="221,10,0,0" VerticalAlignment="Top" Width="11" RenderTransformOrigin="0.939,-10.121" Background="Red"/>
     </Grid>

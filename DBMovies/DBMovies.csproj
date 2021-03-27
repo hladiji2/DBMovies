@@ -56,6 +56,8 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -76,6 +78,15 @@
     </ApplicationDefinition>
     <Compile Include="Access_Window.xaml.cs">
       <DependentUpon>Access_Window.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="model\Member.cs" />
+    <Compile Include="model\Movie.cs" />
+    <Compile Include="model\User.cs" />
+    <Compile Include="NewMovieForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="NewMovieForm.Designer.cs">
+      <DependentUpon>NewMovieForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Movie_Window.xaml.cs">
       <DependentUpon>Movie_Window.xaml</DependentUpon>
@@ -115,6 +126,9 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <EmbeddedResource Include="NewMovieForm.resx">
+      <DependentUpon>NewMovieForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -139,8 +153,6 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="model\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
