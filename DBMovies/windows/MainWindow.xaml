@@ -18,11 +18,11 @@
         
         <Border BorderBrush="Black" BorderThickness="2" Height="340" VerticalAlignment="Bottom">
             <!-- https://wpf.2000things.com/2011/10/04/400-using-a-wrappanel-as-the-items-panel-for-a-listbox/ -->
-            <ListBox ItemsSource="{Binding movieList}" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+            <ListBox ItemsSource="{Binding movies}">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <StackPanel Orientation="Vertical">
-                            <Image Source="{Binding image}" Stretch="Uniform"/>
+                            <!-- <Image Source="{Binding image}" Stretch="Uniform"/> -->
                             <Label Content="{Binding titleWithYear}"/>
                         </StackPanel>
                     </DataTemplate>

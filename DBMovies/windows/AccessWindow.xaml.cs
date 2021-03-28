@@ -8,10 +8,10 @@ using System.Configuration;
 
 namespace DBMovies
 {
-    public partial class Access_Window : Window
+    public partial class AccessWindow : Window
     {
         private MainWindow mainWindow;
-        public Access_Window(MainWindow mainWindow)
+        public AccessWindow(MainWindow mainWindow)
         {
             InitializeComponent();
             this.mainWindow = mainWindow;
@@ -88,9 +88,9 @@ namespace DBMovies
                     while (dataReader.Read())
                     {
                         // TODO       ??počet sloupců dat uživatele??
-                        userData[0] = (string) dataReader.GetValue(0); // Login
-                        userData[1] = (int) dataReader.GetValue(1); // Karma
-                        userData[2] = (byte) dataReader.GetValue(2); // Úroveň práv
+                        userData[0] = dataReader.GetString(0); // Login
+                        userData[1] = dataReader.GetInt32(1); // Karma
+                        userData[2] = dataReader.GetByte(2); // Úroveň práv
                     }
                 }
                 return userData;

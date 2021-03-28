@@ -3,43 +3,58 @@ using System.Windows;
 using System.ComponentModel;
 using DBMovies.model;
 using System.Configuration;
+using System;
+using System.Collections.ObjectModel;
+using System.Windows.Forms;
 
 namespace DBMovies
 {
-    /// <summary>
-    /// Interakční logika pro MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
-        private Access_Window access_Window;
-        private Movie_Window movie_Window;
+        private AccessWindow access_Window;
+        private MovieWindow movie_Window;
+
+        private NewMovieForm f;
 
         public bool wasAccessed;
         public User user;
-        private List<Movie> movieList;
+        //public ObservableCollection<Movie> movies { get; set; }
 
         public MainWindow()
         {
-            InitializeComponent();
+            //movies = new ObservableCollection<Movie> { new Movie("Terminator", "1984") };
+
+            InitializeComponent(); 
             start();
         }
 
         void start()
         {
             wasAccessed = false;
-            movieList = new List<Movie>();
+
+
+            //movieWindow = new MovieWindow(this);
             // Skrýt hlavní okno pro autorizaci
-            Hide();
-            access_Window = new Access_Window(this);
+            //Hide();
+            //accessWindow = new AccessWindow(this);
+            //setGuiElements();
         }
 
-        
+
         private void addMovie(object sender, RoutedEventArgs e)
         {
-            new NewMovieForm();
+            if (f == null)
+            {
+                f = new NewMovieForm();
+                f.Show();
+            }
+            else
+            {
+                f.Dispose();
+                f = null;
+            }
         }
 
-        // TODO Zápis nového filmu do databáze
         /* 
          * object[0] String     - Název Filmu
          * object[1] String     - Rok Vydání
@@ -48,13 +63,18 @@ namespace DBMovies
          * object[4] string[]   - Názvy Žánrů
          * object[...] ...     - ...
          * 
-         * Volá se ve Formuláři NewMovieWindow,
-         * až se nastaví informace o novém filmu.
+         * Volá se ve Formuláři NewMovieForm.
         */
         public void registerMovie(object[] movieData)
         {
             // TODO INSERT INTO DATABASE
+            string nazev = (string)movieData[0];
+            string rok = (string)movieData[1];
+            string reziser = (string)movieData[2];
+            string[] herci = (string[])movieData[3];
+            string[] zanry = (string[])movieData[4];
 
+            
         }
 
         private void deleteMovie(object sender, RoutedEventArgs e)
@@ -73,7 +93,7 @@ namespace DBMovies
             {
                 e.Cancel = true;
                 Hide();
-                access_Window = new Access_Window(this);
+                access_Window = new AccessWindow(this);
             }
         }
 
@@ -88,8 +108,6 @@ namespace DBMovies
                     btnDeleteMovie.IsEnabled = false;
                     break;
             }
-
-            movie_Window.setGuiElements();
         }
     }
 }

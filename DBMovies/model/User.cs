@@ -4,18 +4,9 @@ namespace DBMovies.model
 {
     public class User
     {
-        private string login { get { return login; } set { login = value; } }
-        private int karma { get { return karma; } set { karma = value; } }
-        public byte privilegeLevel 
-        {   
-            get { return privilegeLevel; } 
-            set 
-            { 
-                // TODO, pokud bude změna
-                if (!(value < 0 && value > 3))
-                    privilegeLevel = value; 
-            } 
-        }
+        private string login { get; set; }
+        private int karma { get; set; }
+        public byte privilegeLevel { get; set; }
 
         // Úplná tvorba
         public User(string login, int karma, byte privilegeLevel)

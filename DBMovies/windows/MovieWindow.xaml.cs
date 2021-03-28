@@ -1,20 +1,23 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Forms;
 
 namespace DBMovies
 {
-    public partial class Movie_Window : Window
+    public partial class MovieWindow : Window
     {
         MainWindow mainWindow;
 
-        public Movie_Window(MainWindow mainWindow)
+        AdminReportForm f;
+
+        public MovieWindow(MainWindow mainWindow)
         {
             InitializeComponent();
             this.mainWindow = mainWindow;
-
             mainWindow.Hide();
             Show();
+            setGuiElements();
         }
 
         private void rateMovie(object sender, SelectionChangedEventArgs e)
@@ -42,6 +45,21 @@ namespace DBMovies
 
         private void adminReport(object sender, RoutedEventArgs e)
         {
+            if (f == null)
+            {
+                f = new AdminReportForm();
+                f.Show();
+            }
+            else
+            {
+                f.Dispose();
+                f = null;
+            }
+        }
+
+        public void registerReport(string report)
+        {
+            // TODO INSERT INTO DATABASE
 
         }
 

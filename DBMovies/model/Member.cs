@@ -2,9 +2,9 @@
 {
     class Member
     {
-        private string name { get { return name; } set { name = value; } }
-        private string surname { get { return surname; } set { surname = value; } }
-        private string role { get { return role; } set { role = value; } }
+        private string name { get; set; }
+        private string surname { get; set; }
+        private string role { get; set; }
 
         public Member(string name, string surname, string role)
         {
@@ -15,7 +15,7 @@
 
         public string getFullName()
         {
-            return name + " " + surname;
+            return string.Format("{0} {1}", name, surname);
         }
 
         public override string ToString()

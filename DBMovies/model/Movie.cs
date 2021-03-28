@@ -1,23 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Drawing;
 
 namespace DBMovies.model
 {
     class Movie
     {
-        private string name { get {return name; } set { name = value; } }
-        private byte avgScore { get { return avgScore; } set { avgScore = value; } }
-        private List<string> comments { get { return comments; } set { comments = value; } }
-        private string[] cast { get { return cast; } set { cast = value; } }
-        private string[] genre { get { return genre; } set { genre = value; } }
-        private string releaseDate { get { return releaseDate; } set { releaseDate = value; } }
+        private string name { get; set; }
+        private byte avgScore { get; set; }
+        private ObservableCollection<string> comments { get; set; }
+        private string[] cast { get; set; }
+        private string[] genre { get; set; }
+        private string releaseDate { get; set; }
 
-        public string titleWithYear { get { return titleWithYear; } set { titleWithYear = value; } }
-        public Image image;
+        private string titleWithYear { get; set; }
+        private Image image;
 
         // TODO, Image
-        public Movie(string name, List<string> comments, string[] cast, string[] genre, string releaseDate)
+        public Movie(string name, ObservableCollection<string> comments, string[] cast, string[] genre, string releaseDate)
         {
             this.name = name;
             avgScore = 0;
@@ -25,7 +26,7 @@ namespace DBMovies.model
             this.cast = cast;
             this.genre = genre;
             this.releaseDate = releaseDate;
-            titleWithYear = string.Format("{0} ({1)}", name, releaseDate);
+            titleWithYear = string.Format("{0} ({1})", name, releaseDate);
         }
 
         // Pouze základní informace
@@ -33,9 +34,11 @@ namespace DBMovies.model
         {
             this.name = name;
             avgScore = 0;
-            comments = new List<string>();
+            comments = new ObservableCollection<string>();
+            cast = new string[0];
+            genre = new string[0];
             this.releaseDate = releaseDate;
-            titleWithYear = string.Format("{0} ({1)}", name, releaseDate);
+            titleWithYear = string.Format("{0} ({1})", name, releaseDate);
         }
 
         // RANDOM
@@ -48,8 +51,11 @@ namespace DBMovies.model
                 name += char.ToString(ch);
             }
             avgScore = 0;
+            comments = new ObservableCollection<string> { "Super", "Pecka", "Fuuuuj", "Mohlo by být lepší" };
+            cast = new string[0];
+            genre = new string[0];
             releaseDate = r.Next(1900, 2022).ToString();
-            comments = new List<string> {"Super", "Pecka", "Fuuuuj", "Mohlo by být lepší" };
+            titleWithYear = string.Format("{0} ({1})", name, releaseDate);
         }
 
         public char getFirstLetter()

@@ -53,6 +53,9 @@
     <StartupObject>
     </StartupObject>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>icon.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
@@ -77,22 +80,28 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Access_Window.xaml.cs">
-      <DependentUpon>Access_Window.xaml</DependentUpon>
+    <Compile Include="windows\AccessWindow.xaml.cs">
+      <DependentUpon>AccessWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="forms\AdminReportForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="forms\AdminReportForm.Designer.cs">
+      <DependentUpon>AdminReportForm.cs</DependentUpon>
     </Compile>
     <Compile Include="model\Member.cs" />
     <Compile Include="model\Movie.cs" />
     <Compile Include="model\User.cs" />
-    <Compile Include="NewMovieForm.cs">
+    <Compile Include="forms\NewMovieForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="NewMovieForm.Designer.cs">
+    <Compile Include="forms\NewMovieForm.Designer.cs">
       <DependentUpon>NewMovieForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Movie_Window.xaml.cs">
-      <DependentUpon>Movie_Window.xaml</DependentUpon>
+    <Compile Include="windows\MovieWindow.xaml.cs">
+      <DependentUpon>MovieWindow.xaml</DependentUpon>
     </Compile>
-    <Page Include="MainWindow.xaml">
+    <Page Include="windows\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -100,15 +109,15 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="MainWindow.xaml.cs">
+    <Compile Include="windows\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="Access_Window.xaml">
+    <Page Include="windows\AccessWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Movie_Window.xaml">
+    <Page Include="windows\MovieWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -127,7 +136,10 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <EmbeddedResource Include="NewMovieForm.resx">
+    <EmbeddedResource Include="forms\AdminReportForm.resx">
+      <DependentUpon>AdminReportForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="forms\NewMovieForm.resx">
       <DependentUpon>NewMovieForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -154,6 +166,8 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="icon.ico" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

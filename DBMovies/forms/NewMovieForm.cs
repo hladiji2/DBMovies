@@ -1,11 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace DBMovies
@@ -23,13 +16,13 @@ namespace DBMovies
                txtActors.Text != "" && txtGenre.Text != "" && txtReleaseDate.Text != "")
                 processData();
             else
-                MessageBox.Show("Movie parametrs are incomplete.\nPlease try again.", "FAIL");
+                MessageBox.Show("Movie parameters are incomplete.\nPlease try again.", "FAIL");
         }
 
         private void processData()
         {
             // TODO Kolik jednotek dat do databáze?
-            object[] newMovieData = new object[5];
+            object[] newMovieData = new object[4];
             // Název Filmu
             newMovieData[0] = txtMovieName.Text;
             // Rok Vydání
