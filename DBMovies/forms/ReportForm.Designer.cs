@@ -1,7 +1,7 @@
 ﻿
 namespace DBMovies
 {
-    partial class AdminReportForm
+    partial class ReportForm
     {
         /// <summary>
         /// Required designer variable.
@@ -29,30 +29,30 @@ namespace DBMovies
         /// </summary>
         private void InitializeComponent()
         {
-            this.label1 = new System.Windows.Forms.Label();
-            this.rtbMessagetoAdmin = new System.Windows.Forms.RichTextBox();
+            this.lblMessage = new System.Windows.Forms.Label();
+            this.rtbMessage = new System.Windows.Forms.RichTextBox();
             this.btnSend = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
-            // label1
+            // lblMessage
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(12, 9);
-            this.label1.Margin = new System.Windows.Forms.Padding(3, 0, 3, 10);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(97, 13);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Zpráva pro Admina";
+            this.lblMessage.AutoSize = true;
+            this.lblMessage.Location = new System.Drawing.Point(12, 9);
+            this.lblMessage.Margin = new System.Windows.Forms.Padding(3, 0, 3, 10);
+            this.lblMessage.Name = "lblMessage";
+            this.lblMessage.Size = new System.Drawing.Size(97, 13);
+            this.lblMessage.TabIndex = 0;
+            this.lblMessage.Text = "Zpráva pro Admina";
             // 
             // rtbMessagetoAdmin
             // 
-            this.rtbMessagetoAdmin.Location = new System.Drawing.Point(15, 35);
-            this.rtbMessagetoAdmin.Margin = new System.Windows.Forms.Padding(3, 3, 3, 13);
-            this.rtbMessagetoAdmin.Name = "rtbMessagetoAdmin";
-            this.rtbMessagetoAdmin.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Vertical;
-            this.rtbMessagetoAdmin.Size = new System.Drawing.Size(352, 96);
-            this.rtbMessagetoAdmin.TabIndex = 2;
-            this.rtbMessagetoAdmin.Text = "";
+            this.rtbMessage.Location = new System.Drawing.Point(15, 35);
+            this.rtbMessage.Margin = new System.Windows.Forms.Padding(3, 3, 3, 13);
+            this.rtbMessage.Name = "rtbMessagetoAdmin";
+            this.rtbMessage.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Vertical;
+            this.rtbMessage.Size = new System.Drawing.Size(352, 96);
+            this.rtbMessage.TabIndex = 2;
+            this.rtbMessage.Text = "";
             // 
             // btnSend
             // 
@@ -70,8 +70,8 @@ namespace DBMovies
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(379, 183);
             this.Controls.Add(this.btnSend);
-            this.Controls.Add(this.rtbMessagetoAdmin);
-            this.Controls.Add(this.label1);
+            this.Controls.Add(this.rtbMessage);
+            this.Controls.Add(this.lblMessage);
             this.Name = "AdminReportForm";
             this.Text = "Zpráva";
             this.ResumeLayout(false);
@@ -80,9 +80,8 @@ namespace DBMovies
         }
 
         #endregion
-
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.RichTextBox rtbMessagetoAdmin;
+        private System.Windows.Forms.RichTextBox rtbMessage;
         private System.Windows.Forms.Button btnSend;
+        public System.Windows.Forms.Label lblMessage;
     }
 }

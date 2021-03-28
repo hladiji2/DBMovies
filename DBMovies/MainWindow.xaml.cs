@@ -6,13 +6,14 @@ using System.Configuration;
 using System;
 using System.Collections.ObjectModel;
 using System.Windows.Forms;
+using DBMovies;
 
 namespace DBMovies
 {
     public partial class MainWindow : Window
     {
-        private AccessWindow access_Window;
-        private MovieWindow movie_Window;
+        private AccessWindow accessWindow;
+        private MovieWindow movieWindow;
 
         private NewMovieForm f;
 
@@ -33,7 +34,7 @@ namespace DBMovies
             wasAccessed = false;
 
 
-            //movieWindow = new MovieWindow(this);
+            movieWindow = new MovieWindow(this);
             // Skrýt hlavní okno pro autorizaci
             //Hide();
             //accessWindow = new AccessWindow(this);
@@ -93,7 +94,7 @@ namespace DBMovies
             {
                 e.Cancel = true;
                 Hide();
-                access_Window = new AccessWindow(this);
+                accessWindow = new AccessWindow(this);
             }
         }
 

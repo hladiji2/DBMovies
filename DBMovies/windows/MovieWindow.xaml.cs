@@ -9,7 +9,7 @@ namespace DBMovies
     {
         MainWindow mainWindow;
 
-        AdminReportForm f;
+        ReportForm f;
 
         public MovieWindow(MainWindow mainWindow)
         {
@@ -17,7 +17,6 @@ namespace DBMovies
             this.mainWindow = mainWindow;
             mainWindow.Hide();
             Show();
-            setGuiElements();
         }
 
         private void rateMovie(object sender, SelectionChangedEventArgs e)
@@ -31,11 +30,24 @@ namespace DBMovies
 
         private void addComment(object sender, RoutedEventArgs e)
         {
-            // Jednoduchý dialog pouze s textboxem jako oblast pro komentář
-            // Nesmí být prázdný 
+            if (f == null)
+            {
+                f = new ReportForm("movie");
+                f.lblMessage.Text = "Přidej komentář";
+                f.Text = "Komentář";
+                f.Show();
+            }
+            else
+            {
+                f.Dispose();
+                f = null;
+            }
+        }
 
-            // Po stisknutí Ok se přidá do filmu, na který se zrovna kouká
-            // aktualizace databáze komentářů
+        public void registerComment(string newComment)
+        {
+            // TODO INSERT INTO DATABASE
+
         }
 
         private void deleteComment(object sender, RoutedEventArgs e)
@@ -47,7 +59,7 @@ namespace DBMovies
         {
             if (f == null)
             {
-                f = new AdminReportForm();
+                f = new ReportForm("admin");
                 f.Show();
             }
             else
