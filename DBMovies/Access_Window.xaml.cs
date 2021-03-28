@@ -1,24 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using DBMovies.model;
+using System;
 using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
+using System.Configuration;
 
 namespace DBMovies
 {
-    /// <summary>
-    /// Interakční logika pro Window1.xaml
-    /// </summary>
     public partial class Access_Window : Window
     {
         private MainWindow mainWindow;
@@ -29,18 +18,26 @@ namespace DBMovies
             ResizeMode = ResizeMode.NoResize;
 
             Show();
-            if (isDBConnected(mainWindow.cnns))
+            if (isDBConnected())
                 status.Background = Brushes.Green;
         }
-        public bool isDBConnected(string cnns)
+        public bool isDBConnected()
         {
-            using (SqlConnection cnn = new SqlConnection(cnns))
+            using (SqlConnection cnn = new SqlConnection(ConfigurationManager.ConnectionStrings["cnns0"].ConnectionString))
             {
-                cnn.Open();
-                if (cnn.State == ConnectionState.Open)
-                    return true;
-                else
+                try
+                {
+                    cnn.Open();
+                    if (cnn.State == ConnectionState.Open)
+                        return true;
+                    else
+                        return false;
+                }
+                catch (SqlException e)
+                {
+                    Console.WriteLine(e.Message);
                     return false;
+                }
             }
         }
 
@@ -48,10 +45,10 @@ namespace DBMovies
         {
             object[] userData = getUserDataIfExists(txtUserLogin.Text, txtUserPassword.Password);
 
-            if (userData.GetValue(0) != null)
+            if (userData.GetValue(2) != null)
             {
                 //TODO SWITCH předat informace o uživateli Hlavnímu oknu
-                switch ((byte)userData.GetValue(0))
+                switch (userData.GetValue(2))
                 {
                     case 0: mainWindow.txtUserMode.Text = "Admin"; break;
                     case 1: mainWindow.txtUserMode.Text = "Moderator"; break;
@@ -59,10 +56,11 @@ namespace DBMovies
                 }
                 mainWindow.txtUserLogin.Text = txtUserLogin.Text;
                 mainWindow.wasAccessed = true;
-                //TODO oprávnění a omezení pro ostatní okna
-                mainWindow.privileges = (byte) userData.GetValue(0);
-
+                //TODO informace o uživateli pro ostatní okna
+                mainWindow.user = new User((string) userData.GetValue(0), (int) userData.GetValue(1), (byte) userData.GetValue(2)); ;
+                
                 Hide();
+                mainWindow.setGuiElements();
                 mainWindow.Show();
             }
             else
@@ -74,41 +72,35 @@ namespace DBMovies
         }
 
         //TODO
-        private object[] getUserDataIfExists(string userName, string password)
+        private object[] getUserDataIfExists(string login, string password)
         {
-            using (SqlConnection connection = new SqlConnection(mainWindow.cnns))
+            using (SqlConnection cnn = new SqlConnection(ConfigurationManager.ConnectionStrings["cnns0"].ConnectionString))
             {
-                connection.Open();
-                string SELECT = @"SELECT * FROM !!! WHERE !!!=" + userName + " AND !!!=" + password;
+                cnn.Open();
+                string SELECT = @"SELECT * FROM !!! WHERE !!!=" + login + " AND !!!=" + password;
                 // TODO              ??počet sloupců dat uživatele??
-                object[] userData = new object[4];
+                object[] userData = new object[3];
 
-                using (SqlCommand command = new SqlCommand(SELECT, connection))
+                using (SqlCommand command = new SqlCommand(SELECT, cnn))
                 {
                     SqlDataReader dataReader = command.ExecuteReader();
 
                     while (dataReader.Read())
                     {
                         // TODO       ??počet sloupců dat uživatele??
-                        userData[0] = dataReader.GetValue(0);
-                        userData[1] = dataReader.GetValue(1);
-                        userData[2] = dataReader.GetValue(2);
+                        userData[0] = (string) dataReader.GetValue(0); // Login
+                        userData[1] = (int) dataReader.GetValue(1); // Karma
+                        userData[2] = (byte) dataReader.GetValue(2); // Úroveň práv
                     }
                 }
                 return userData;
             }
         }
 
-        /// <summary>
-        /// Metoda pro zajištění přístupu do oken
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        // Metoda pro zajištění přístupu do oken
         private void Window_Closed(object sender, EventArgs e)
         {
             // Pokud nebylo zpřístupněno hlavní okno přes autorizaci, tak manuálně vypne Hlavní okno a tím i celou aplikaci
-            // Pokud bylo zpřístupněno ==>
-            // TODO na zajištění tlačítka pro autorizaci jiného uživatele, ať není nutno restartovat aplikaci
             if (!mainWindow.wasAccessed)
                 mainWindow.Close();
             else
@@ -120,7 +112,5 @@ namespace DBMovies
             mainWindow.wasAccessed = false;
             Close();
         }
-
-
     }
 }

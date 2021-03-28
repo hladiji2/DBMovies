@@ -11,19 +11,19 @@
         <TextBox x:Name="txtUserMode" HorizontalAlignment="Left" Height="23" Margin="10,10,0,0" TextWrapping="Wrap" Text="Režim uživatele" VerticalAlignment="Top" Width="120" IsReadOnly="True"/>
         <TextBox x:Name="txtUserLogin" HorizontalAlignment="Left" Height="23" Margin="10,38,0,0" TextWrapping="Wrap" Text="Přihlašovací jméno" VerticalAlignment="Top" Width="120" IsReadOnly="True"/>
         <Label Content="Karma:" HorizontalAlignment="Left" Margin="135,10,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="txtKarma" BorderThickness="0"  HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="63" Margin="181,10,0,0" IsReadOnly="True"/>
+        <TextBox x:Name="txtKarma" BorderThickness="0"  HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Margin="181,15,0,0" IsReadOnly="True" Text="Karma" TextAlignment="Justify"/>
         
-        <Button Content="+" HorizontalAlignment="Left" Margin="732,20,0,0" VerticalAlignment="Top" Width="20" Click="addMovie"/>
-        <Button Content="-" HorizontalAlignment="Left" Margin="757,20,-40,0" VerticalAlignment="Top" Width="20"  Click="deleteMovie"/>
+        <Button x:Name="btnAddMovie" Content="+" HorizontalAlignment="Left" Margin="732,20,0,0" VerticalAlignment="Top" Width="20" Click="addMovie"/>
+        <Button x:Name="btnDeleteMovie" Content="-" HorizontalAlignment="Left" Margin="757,20,-40,0" VerticalAlignment="Top" Width="20"  Click="deleteMovie"/>
         
         <Border BorderBrush="Black" BorderThickness="2" Height="340" VerticalAlignment="Bottom">
             <!-- https://wpf.2000things.com/2011/10/04/400-using-a-wrappanel-as-the-items-panel-for-a-listbox/ -->
-            <ListBox ItemsSource="{Binding MovieList}" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+            <ListBox ItemsSource="{Binding movieList}" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <StackPanel Orientation="Vertical">
-                            <Image Source="{Binding Image}" Stretch="None"/>
-                            <Label Content="{Binding TitleWithYear}"/>
+                            <Image Source="{Binding image}" Stretch="Uniform"/>
+                            <Label Content="{Binding titleWithYear}"/>
                         </StackPanel>
                     </DataTemplate>
                 </ListBox.ItemTemplate>

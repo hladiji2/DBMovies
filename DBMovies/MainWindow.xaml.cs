@@ -1,22 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Data;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using System.Data.SqlClient;
 using System.ComponentModel;
-using System.Windows.Forms;
 using DBMovies.model;
+using System.Configuration;
 
 namespace DBMovies
 {
@@ -29,21 +15,19 @@ namespace DBMovies
         private Movie_Window movie_Window;
 
         public bool wasAccessed;
-        public byte privileges;
-
-        public string cnns = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=MovieDB;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
+        public User user;
+        private List<Movie> movieList;
 
         public MainWindow()
         {
             InitializeComponent();
             start();
-            Movie m = new Movie("Terminator");
-            m.
         }
 
         void start()
         {
             wasAccessed = false;
+            movieList = new List<Movie>();
             // Skrýt hlavní okno pro autorizaci
             Hide();
             access_Window = new Access_Window(this);
@@ -58,9 +42,10 @@ namespace DBMovies
         // TODO Zápis nového filmu do databáze
         /* 
          * object[0] String     - Název Filmu
-         * object[1] String     - Název Režiséra
-         * object[2] string[]   - Názvy Herců
-         * object[3] string[]   - Názvy Žánrů
+         * object[1] String     - Rok Vydání
+         * object[2] String     - Název Režiséra
+         * object[3] string[]   - Názvy Herců
+         * object[4] string[]   - Názvy Žánrů
          * object[...] ...     - ...
          * 
          * Volá se ve Formuláři NewMovieWindow,
@@ -68,11 +53,14 @@ namespace DBMovies
         */
         public void registerMovie(object[] movieData)
         {
+            // TODO INSERT INTO DATABASE
 
         }
 
         private void deleteMovie(object sender, RoutedEventArgs e)
         {
+            // TODO DELETE FROM DATABASE
+            
 
         }
 
@@ -87,6 +75,21 @@ namespace DBMovies
                 Hide();
                 access_Window = new Access_Window(this);
             }
+        }
+
+        public void setGuiElements()
+        {
+            switch (user.privilegeLevel)
+            {
+                // TODO změnit viditelnost prvků gui podle oprávnění
+                case 1: // Moderator
+                case 2: // User
+                    btnAddMovie.IsEnabled = false;
+                    btnDeleteMovie.IsEnabled = false;
+                    break;
+            }
+
+            movie_Window.setGuiElements();
         }
     }
 }

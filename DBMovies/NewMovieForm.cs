@@ -20,7 +20,7 @@ namespace DBMovies
         private void btnRegister_Click(object sender, EventArgs e)
         {
             if (txtMovieName.Text != "" && txtDirector.Text != "" &&
-               txtActors.Text != "" && txtGenre.Text != "")
+               txtActors.Text != "" && txtGenre.Text != "" && txtReleaseDate.Text != "")
                 processData();
             else
                 MessageBox.Show("Movie parametrs are incomplete.\nPlease try again.", "FAIL");
@@ -29,17 +29,19 @@ namespace DBMovies
         private void processData()
         {
             // TODO Kolik jednotek dat do databáze?
-            object[] newMovieData = new object[4];
+            object[] newMovieData = new object[5];
             // Název Filmu
             newMovieData[0] = txtMovieName.Text;
+            // Rok Vydání
+            newMovieData[1] = txtReleaseDate.Text;
             // Jméno Režiséra
-            newMovieData[1] = txtDirector.Text;
+            newMovieData[2] = txtDirector.Text;
 
             // KOLEKCE Herců
-            newMovieData[2] = getActorsNames();
+            newMovieData[3] = getActorsNames();
 
             // KOLEKCE Žánrů
-            newMovieData[3] = getGenreNames();
+            newMovieData[4] = getGenreNames();
 
             // Předává ze současného formuláře do metody Hlavního okna
             ((MainWindow) System.Windows.Application.Current.MainWindow).registerMovie(newMovieData);
@@ -65,6 +67,5 @@ namespace DBMovies
 
             return lsGenres;
         }
-
     }
 }

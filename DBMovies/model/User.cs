@@ -1,17 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DBMovies.model
 {
-    class User
+    public class User
     {
         private string login { get { return login; } set { login = value; } }
         private int karma { get { return karma; } set { karma = value; } }
-        private byte privilegeLevel 
-        {   get { return privilegeLevel; } 
+        public byte privilegeLevel 
+        {   
+            get { return privilegeLevel; } 
             set 
             { 
                 // TODO, pokud bude změna

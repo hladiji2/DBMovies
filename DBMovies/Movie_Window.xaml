@@ -15,7 +15,8 @@
         <TextBox HorizontalAlignment="Left" Height="23" Margin="10,88,0,0" TextWrapping="Wrap" Text="Skóre" VerticalAlignment="Top" Width="120" IsReadOnly="True"/>
         <TextBox HorizontalAlignment="Left" Height="23" Margin="10,117,0,0" TextWrapping="Wrap" Text="Score" VerticalAlignment="Top" Width="120" IsReadOnly="True" BorderThickness="0"/>
 
-        <ComboBox x:Name="cmbRating" HorizontalAlignment="Left" Margin="20,145,0,0" VerticalAlignment="Top" Width="100" Text="Hodnoť" IsEditable="False" SelectionChanged="Rate_MovieCombo">
+        <ComboBox x:Name="cmbRating" HorizontalAlignment="Left" Margin="20,145,0,0" VerticalAlignment="Top" Width="100" Text="Hodnoť" IsEditable="False" SelectionChanged="rateMovie" >
+            <ComboBoxItem>0</ComboBoxItem>
             <ComboBoxItem>1</ComboBoxItem>
             <ComboBoxItem>2</ComboBoxItem>
             <ComboBoxItem>3</ComboBoxItem>
@@ -28,19 +29,19 @@
             <ComboBoxItem>10</ComboBoxItem>
         </ComboBox>
 
-        <Button Content="Komentuj" Click="Add_Comment" HorizontalAlignment="Right" VerticalAlignment="Top" Width="120" Margin="0,389,662,0"/>
-        <Button Content="!" HorizontalAlignment="Left" Click="Delete_Comment" Margin="732,20,0,0" VerticalAlignment="Top" Width="20"/>
-        <Button Content="?" HorizontalAlignment="Left" Click="Admin_Report" Margin="757,20,-40,0" VerticalAlignment="Top" Width="20"/>
+        <Button x:Name="btnAddComment" Content="Komentuj" Click="addComment" HorizontalAlignment="Right" VerticalAlignment="Top" Width="120" Margin="0,389,662,0"/>
+        <Button x:Name="btnDeleteComment" Content="!" HorizontalAlignment="Left" Click="deleteComment" Margin="732,20,0,0" VerticalAlignment="Top" Width="20"/>
+        <Button x:Name="btnAdminReport" Content="?" HorizontalAlignment="Left" Click="adminReport" Margin="757,20,-40,0" VerticalAlignment="Top" Width="20"/>
 
-        <Border BorderBrush="Black" BorderThickness="2" Height="350" HorizontalAlignment="Left" Margin="0,69,0,0" VerticalAlignment="Top" Width="140"/>
+        <!--<Border BorderBrush="Black" BorderThickness="2" Height="350" HorizontalAlignment="Left" Margin="0,69,0,0" VerticalAlignment="Top" Width="140"/>-->
         <Border BorderBrush="Black" BorderThickness="2" Height="350" VerticalAlignment="Bottom" Margin="140,0,0,0">
             <ItemsControl x:Name="Comments" Grid.Row="0">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
                         <Border BorderBrush="Black" BorderThickness="1" Margin="10" Padding="10">
                             <StackPanel Orientation="Vertical">
-                                <TextBlock Text="{Binding Login}" />
-                                <TextBlock Text="{Binding Comment}" />
+                                <TextBlock Text="{Binding login}" />
+                                <TextBlock Text="{Binding comment}" />
                             </StackPanel>
                         </Border>
                     </DataTemplate>

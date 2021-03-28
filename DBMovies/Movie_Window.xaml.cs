@@ -1,32 +1,32 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace DBMovies
 {
-    /// <summary>
-    /// Interakční logika pro Window1.xaml
-    /// </summary>
     public partial class Movie_Window : Window
     {
         MainWindow mainWindow;
+
         public Movie_Window(MainWindow mainWindow)
         {
             InitializeComponent();
             this.mainWindow = mainWindow;
+
+            mainWindow.Hide();
+            Show();
         }
 
-        private void Add_Comment()
+        private void rateMovie(object sender, SelectionChangedEventArgs e)
+        {
+            // Při změně hodnocení v ComboBoxu
+            // TODO změna v databázi
+            // UPDATE DATABASE
+
+            //cmbRating.SelectedIndex;
+        }
+
+        private void addComment(object sender, RoutedEventArgs e)
         {
             // Jednoduchý dialog pouze s textboxem jako oblast pro komentář
             // Nesmí být prázdný 
@@ -34,41 +34,37 @@ namespace DBMovies
             // Po stisknutí Ok se přidá do filmu, na který se zrovna kouká
             // aktualizace databáze komentářů
         }
-        
-        private void Rate_MovieCombo(object sender, SelectionChangedEventArgs e)
-        {
-            // Při změně hodnocení v ComboBoxu
-            int rating = (int)cmbRating.SelectedItem;
-            if (rating >= 0 && rating <= 10) 
-                changeRateCombo(rating);
-            // TODO
-            else throw new Exception();
-        }
 
-        private void changeRateCombo(int changedRating)
+        private void deleteComment(object sender, RoutedEventArgs e)
         {
 
         }
 
-        private void Delete_Movie(object sender, RoutedEventArgs e)
+        private void adminReport(object sender, RoutedEventArgs e)
         {
 
         }
 
-        private void Add_Comment(object sender, RoutedEventArgs e)
+        public void setGuiElements()
         {
-
+            switch (mainWindow.user.privilegeLevel)
+            {
+                // TODO změnit viditelnost prvků gui podle oprávnění
+                case 0: // Admin
+                    cmbRating.IsEnabled = false;
+                    btnAddComment.IsEnabled = false;
+                    btnAdminReport.IsEnabled = false;
+                    btnDeleteComment.IsEnabled = false;
+                    break;
+                case 1: // Moderator
+                    cmbRating.IsEnabled = false;
+                    btnAddComment.IsEnabled = false;
+                    break;
+                case 3: // Uživatel
+                    btnAdminReport.IsEnabled = false;
+                    btnDeleteComment.IsEnabled = false;
+                    break;
+            }
         }
-
-        private void Delete_Comment(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void Admin_Report(object sender, RoutedEventArgs e)
-        {
-
-        }
-
     }
 }
