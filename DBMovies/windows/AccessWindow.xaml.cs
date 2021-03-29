@@ -45,20 +45,20 @@ namespace DBMovies
         {
             object[] userData = getUserDataIfExists(txtUserLogin.Text, txtUserPassword.Password);
 
-            if (userData.GetValue(2) != null)
+            if (userData.GetValue(0) != null)
             {
                 //TODO SWITCH předat informace o uživateli Hlavnímu oknu
                 switch (userData.GetValue(2))
                 {
                     case 0: mainWindow.txtUserMode.Text = "Admin"; break;
-                    case 1: mainWindow.txtUserMode.Text = "Moderator"; break;
+                    case 1: mainWindow.txtUserMode.Text = "Moderátor"; break;
                     case 2: mainWindow.txtUserMode.Text = "Uživatel"; break;
                 }
                 mainWindow.txtUserLogin.Text = txtUserLogin.Text;
                 mainWindow.wasAccessed = true;
                 //TODO informace o uživateli pro ostatní okna
-                mainWindow.user = new User((string) userData.GetValue(0), (int) userData.GetValue(1), (byte) userData.GetValue(2)); ;
-                
+                mainWindow.user = new User((string)userData.GetValue(0), (int)userData.GetValue(1), (byte)userData.GetValue(2)); ;
+
                 Hide();
                 mainWindow.setGuiElements();
                 mainWindow.Show();
@@ -76,24 +76,32 @@ namespace DBMovies
         {
             using (SqlConnection cnn = new SqlConnection(ConfigurationManager.ConnectionStrings["cnns0"].ConnectionString))
             {
-                cnn.Open();
-                string SELECT = @"SELECT * FROM !!! WHERE !!!=" + login + " AND !!!=" + password;
-                // TODO              ??počet sloupců dat uživatele??
-                object[] userData = new object[3];
-
-                using (SqlCommand command = new SqlCommand(SELECT, cnn))
+                try
                 {
-                    SqlDataReader dataReader = command.ExecuteReader();
-
-                    while (dataReader.Read())
+                    object[] userData = new object[3];
+                    cnn.Open();
+                    string SELECT = @"SELECT * FROM !!! WHERE !!!=" + login + " AND !!!=" + password;
+                    // TODO              ??počet sloupců dat uživatele??
+                    
+                    using (SqlCommand cmd = new SqlCommand(SELECT, cnn))
                     {
-                        // TODO       ??počet sloupců dat uživatele??
-                        userData[0] = dataReader.GetString(0); // Login
-                        userData[1] = dataReader.GetInt32(1); // Karma
-                        userData[2] = dataReader.GetByte(2); // Úroveň práv
+                        SqlDataReader dataReader = cmd.ExecuteReader();
+
+                        while (dataReader.Read())
+                        {
+                            // TODO       ??počet sloupců dat uživatele??
+                            userData[0] = dataReader.GetString(0); // Login
+                            userData[1] = dataReader.GetInt32(1); // Karma
+                            userData[2] = dataReader.GetByte(2); // Úroveň práv
+                        }
                     }
+                    return userData;
                 }
-                return userData;
+                catch (SqlException)
+                {
+                    return new object[] { null };
+                }
+                
             }
         }
 

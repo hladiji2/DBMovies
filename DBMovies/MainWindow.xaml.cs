@@ -31,14 +31,13 @@ namespace DBMovies
 
         void start()
         {
-            wasAccessed = false;
-
-
-            movieWindow = new MovieWindow(this);
             // Skrýt hlavní okno pro autorizaci
-            //Hide();
-            //accessWindow = new AccessWindow(this);
-            //setGuiElements();
+            Hide();
+            wasAccessed = false;
+            ResizeMode = ResizeMode.NoResize;
+            accessWindow = new AccessWindow(this);
+
+            //movieWindow = new MovieWindow(this);
         }
 
 
