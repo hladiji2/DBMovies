@@ -8,12 +8,12 @@
         Title="Nazev_Filmu" Height="450" Width="800">
     <Grid>
         
-        <TextBox HorizontalAlignment="Left" Height="23" Margin="10,10,0,0" TextWrapping="Wrap" Text="Název Filmu" VerticalAlignment="Top" Width="120" IsReadOnly="True"/>
-        <TextBox HorizontalAlignment="Left" Height="23" Margin="10,38,0,0" TextWrapping="Wrap" Text="Režisér" VerticalAlignment="Top" Width="120" IsReadOnly="True"/>
-        <TextBox HorizontalAlignment="Left" Height="23" Margin="140,10,0,0" TextWrapping="Wrap" Text="Herci: " VerticalAlignment="Top" Width="300" IsReadOnly="True"/>
-        <TextBox HorizontalAlignment="Left" Height="23" Margin="140,38,0,0" TextWrapping="Wrap" Text="Žánr: " VerticalAlignment="Top" Width="300" IsReadOnly="True"/>
+        <TextBox x:Name="tbName" HorizontalAlignment="Left" Height="23" Margin="10,10,0,0" TextWrapping="Wrap" Text="Název Filmu" VerticalAlignment="Top" Width="120" IsReadOnly="True"/>
+        <TextBox x:Name="tbDirector" HorizontalAlignment="Left" Height="23" Margin="10,38,0,0" TextWrapping="Wrap" Text="Režisér" VerticalAlignment="Top" Width="120" IsReadOnly="True"/>
+        <TextBox x:Name="tbActors" HorizontalAlignment="Left" Height="23" Margin="140,10,0,0" TextWrapping="Wrap" Text="Herci: " VerticalAlignment="Top" Width="300" IsReadOnly="True"/>
+        <TextBox x:Name="tbGenres" HorizontalAlignment="Left" Height="23" Margin="140,38,0,0" TextWrapping="Wrap" Text="Žánr: " VerticalAlignment="Top" Width="300" IsReadOnly="True"/>
         <TextBox HorizontalAlignment="Left" Height="23" Margin="10,88,0,0" TextWrapping="Wrap" Text="Skóre" VerticalAlignment="Top" Width="120" IsReadOnly="True"/>
-        <TextBox HorizontalAlignment="Left" Height="23" Margin="10,117,0,0" TextWrapping="Wrap" Text="Score" VerticalAlignment="Top" Width="120" IsReadOnly="True" BorderThickness="0"/>
+        <TextBox x:Name="tbScore" HorizontalAlignment="Left" Height="23" Margin="10,117,0,0" TextWrapping="Wrap" Text="Score" VerticalAlignment="Top" Width="120" IsReadOnly="True" BorderThickness="0"/>
 
         <ComboBox x:Name="cmbRating" HorizontalAlignment="Left" Margin="20,145,0,0" VerticalAlignment="Top" Width="100" Text="Hodnoť" IsEditable="False" SelectionChanged="rateMovie" >
             <ComboBoxItem>0</ComboBoxItem>

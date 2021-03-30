@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Forms;
@@ -52,7 +53,9 @@ namespace DBMovies
 
         private void deleteComment(object sender, RoutedEventArgs e)
         {
-
+            // TODO ListBox metoda (asi) Selected
+            // pokud nebude označený prvek v komentářích GUI, tak zobraz Warning Zprávu
+            // pokud je označený komentář, tak
         }
 
         private void adminReport(object sender, RoutedEventArgs e)
@@ -95,6 +98,12 @@ namespace DBMovies
                     btnDeleteComment.IsEnabled = false;
                     break;
             }
+        }
+
+        // Metoda pro zajištění přístupu do oken
+        protected override void OnClosing(CancelEventArgs e)
+        {
+            mainWindow.Show();
         }
     }
 }

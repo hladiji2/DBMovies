@@ -7,6 +7,7 @@ using System;
 using System.Collections.ObjectModel;
 using System.Windows.Forms;
 using DBMovies;
+using System.Windows.Controls;
 
 namespace DBMovies
 {
@@ -19,23 +20,31 @@ namespace DBMovies
 
         public bool wasAccessed;
         public User user;
-        //public ObservableCollection<Movie> movies { get; set; }
+        public ObservableCollection<Movie> movies { get; set; }
 
         public MainWindow()
         {
-            //movies = new ObservableCollection<Movie> { new Movie("Terminator", "1984") };
+            movies = new ObservableCollection<Movie>
+            {
+                new Movie("Terminator", "1984"),
+                new Movie("Blabla", "2021"),
+                new Movie("The Room", "2006")
+            };
 
-            InitializeComponent(); 
+            InitializeComponent();
+            // MUSÍ BÝT VŽDY
+            lsbMovies.ItemsSource = movies;
+            
             start();
         }
 
         void start()
         {
             // Skrýt hlavní okno pro autorizaci
-            Hide();
+            //Hide();
             wasAccessed = false;
             ResizeMode = ResizeMode.NoResize;
-            accessWindow = new AccessWindow(this);
+            //accessWindow = new AccessWindow(this);
 
             //movieWindow = new MovieWindow(this);
         }
@@ -109,5 +118,15 @@ namespace DBMovies
                     break;
             }
         }
+
+        // HEAVY TODO
+        private void displayMovie(object sender, SelectionChangedEventArgs args)
+        {
+            Movie ma = (Movie) args.AddedItems[0];
+            MovieWindow m = new MovieWindow(this);
+            m.tbName.Text = ma.titleWithYear;
+            m.tbScore.Text = ma.avgScore.ToString();
+        }
+
     }
 }

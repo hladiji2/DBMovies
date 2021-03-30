@@ -5,21 +5,33 @@ using System.Drawing;
 
 namespace DBMovies.model
 {
-    class Movie
+    public class Movie
     {
-        private string name { get; set; }
-        private byte avgScore { get; set; }
-        private ObservableCollection<string> comments { get; set; }
-        private string[] cast { get; set; }
-        private string[] genre { get; set; }
-        private string releaseDate { get; set; }
+        public int id { get; set; }
 
-        private string titleWithYear { get; set; }
-        private Image image;
+        public string name { get; set; }
+
+        public byte avgScore { get; set; }
+
+        public ObservableCollection<string> comments { get; set; }
+
+        public string[] cast { get; set; }
+
+        public string[] genre { get; set; }
+
+        public string releaseDate { get; set; }
+        
+        public string titleWithYear { get; set; }
+
+        public Image image;
+
+
+        public static Random r = new Random();
 
         // TODO, Image
-        public Movie(string name, ObservableCollection<string> comments, string[] cast, string[] genre, string releaseDate)
+        public Movie(int id, string name, ObservableCollection<string> comments, string[] cast, string[] genre, string releaseDate)
         {
+            this.id = id;
             this.name = name;
             avgScore = 0;
             this.comments = comments;
@@ -44,10 +56,10 @@ namespace DBMovies.model
         // RANDOM
         public Movie()
         {
-            Random r = new Random();
+            id = r.Next(0, int.MaxValue);
             for (int i = 0; i < 100; i+=10)
             {
-                char ch = (char)r.Next(i, i+2);
+                char ch = (char)r.Next(1, i+2);
                 name += char.ToString(ch);
             }
             avgScore = 0;
@@ -66,8 +78,8 @@ namespace DBMovies.model
         public override string ToString()
         {
             return string.Format(
-                "Name: {0}\nAverage Score: {1}\n# of comments: {2}\n# of cast: {3}\n# of genre: {4}\nRelease Date: {5}",
-                name, avgScore, comments.Count, cast.Length, genre.Length, releaseDate);
+                "ID: {0}\nName: {1}\nAverage Score: {2}\n# of comments: {3}\n# of cast: {4}\n# of genre: {5}\nRelease Date: {6}",
+                id, name, avgScore, comments.Count, cast.Length, genre.Length, releaseDate);
         }
     }
 }
