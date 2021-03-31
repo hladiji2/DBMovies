@@ -4,8 +4,8 @@ namespace DBMovies.model
 {
     public class User
     {
-        private string login { get; set; }
-        private int karma { get; set; }
+        public string login { get; set; }
+        public int karma { get; set; }
         public byte privilegeLevel { get; set; }
 
         // Úplná tvorba
@@ -34,7 +34,6 @@ namespace DBMovies.model
                 char ch = (char)r.Next(0, 65536);
                 login += char.ToString(ch);
             }
-            login += r.Next(1, 100);
             karma = r.Next(0, 9000);
             // TODO může se změnit
             privilegeLevel = (byte) r.Next(0,3);

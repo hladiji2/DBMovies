@@ -5,15 +5,15 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DBMovies"
         mc:Ignorable="d"
-        Title="Nazev_Filmu" Height="450" Width="800">
+        Title="Nazev Filmu" Height="457.049" Width="800">
     <Grid>
         
         <TextBox x:Name="tbName" HorizontalAlignment="Left" Height="23" Margin="10,10,0,0" TextWrapping="Wrap" Text="Název Filmu" VerticalAlignment="Top" Width="120" IsReadOnly="True"/>
         <TextBox x:Name="tbDirector" HorizontalAlignment="Left" Height="23" Margin="10,38,0,0" TextWrapping="Wrap" Text="Režisér" VerticalAlignment="Top" Width="120" IsReadOnly="True"/>
         <TextBox x:Name="tbActors" HorizontalAlignment="Left" Height="23" Margin="140,10,0,0" TextWrapping="Wrap" Text="Herci: " VerticalAlignment="Top" Width="300" IsReadOnly="True"/>
         <TextBox x:Name="tbGenres" HorizontalAlignment="Left" Height="23" Margin="140,38,0,0" TextWrapping="Wrap" Text="Žánr: " VerticalAlignment="Top" Width="300" IsReadOnly="True"/>
-        <TextBox HorizontalAlignment="Left" Height="23" Margin="10,88,0,0" TextWrapping="Wrap" Text="Skóre" VerticalAlignment="Top" Width="120" IsReadOnly="True"/>
-        <TextBox x:Name="tbScore" HorizontalAlignment="Left" Height="23" Margin="10,117,0,0" TextWrapping="Wrap" Text="Score" VerticalAlignment="Top" Width="120" IsReadOnly="True" BorderThickness="0"/>
+        <TextBox TextAlignment="Center" HorizontalAlignment="Left" Height="23" Margin="10,88,0,0" TextWrapping="Wrap" Text="Skóre" VerticalAlignment="Top" Width="120" IsReadOnly="True"/>
+        <TextBox x:Name="tbScore" HorizontalAlignment="Left" Height="23" Margin="10,117,0,0" TextWrapping="Wrap" Text="Score" VerticalAlignment="Top" Width="120" IsReadOnly="True" BorderThickness="0" TextAlignment="Center"/>
 
         <ComboBox x:Name="cmbRating" HorizontalAlignment="Left" Margin="20,145,0,0" VerticalAlignment="Top" Width="100" Text="Hodnoť" IsEditable="False" SelectionChanged="rateMovie" >
             <ComboBoxItem>0</ComboBoxItem>
@@ -29,24 +29,22 @@
             <ComboBoxItem>10</ComboBoxItem>
         </ComboBox>
 
-        <Button x:Name="btnAddComment" Content="Komentuj" Click="addComment" HorizontalAlignment="Right" VerticalAlignment="Top" Width="120" Margin="0,389,662,0"/>
-        <Button x:Name="btnDeleteComment" Content="!" HorizontalAlignment="Left" Click="deleteComment" Margin="732,20,0,0" VerticalAlignment="Top" Width="20"/>
-        <Button x:Name="btnAdminReport" Content="?" HorizontalAlignment="Left" Click="adminReport" Margin="757,20,-40,0" VerticalAlignment="Top" Width="20"/>
-
-        <!--<Border BorderBrush="Black" BorderThickness="2" Height="350" HorizontalAlignment="Left" Margin="0,69,0,0" VerticalAlignment="Top" Width="140"/>-->
+        <Button x:Name="btnAddComment" Content="Komentuj" Click="addComment" HorizontalAlignment="Right" VerticalAlignment="Top" Width="120" Margin="0,389,655,0" />
+        <Button x:Name="btnDeleteComment" Content="!" HorizontalAlignment="Left" Click="deleteComment" Margin="757,20,-40,0" VerticalAlignment="Top" Width="20"/>
+        <Button x:Name="btnAdminReport" Content="?" HorizontalAlignment="Left" Click="adminReport" Margin="732,20,0,0" VerticalAlignment="Top" Width="20"/>
+        
         <Border BorderBrush="Black" BorderThickness="2" Height="350" VerticalAlignment="Bottom" Margin="140,0,0,0">
-            <ItemsControl x:Name="Comments" Grid.Row="0">
-                <ItemsControl.ItemTemplate>
+            <ListBox x:Name="lsbComments">
+                <ListBox.ItemTemplate>
                     <DataTemplate>
-                        <Border BorderBrush="Black" BorderThickness="1" Margin="10" Padding="10">
-                            <StackPanel Orientation="Vertical">
-                                <TextBlock Text="{Binding login}" />
-                                <TextBlock Text="{Binding comment}" />
-                            </StackPanel>
-                        </Border>
+                        <StackPanel Orientation="Horizontal">
+                            <!-- <TextBlock x:Name="tbLogin" Text="{Binding login}" /> -->
+                            <!-- <TextBlock x:Name="tbComment" Text="{Binding comment}" /> -->
+                            <TextBlock Text="{Binding}"/>
+                        </StackPanel>
                     </DataTemplate>
-                </ItemsControl.ItemTemplate>
-            </ItemsControl>
+                </ListBox.ItemTemplate>
+            </ListBox>
         </Border>
 
     </Grid>

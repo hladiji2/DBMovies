@@ -24,6 +24,7 @@ namespace DBMovies
 
         public MainWindow()
         {
+            user = new User();
             movies = new ObservableCollection<Movie>
             {
                 new Movie("Terminator", "1984"),
@@ -31,7 +32,11 @@ namespace DBMovies
                 new Movie("The Room", "2006")
             };
 
+
+
             InitializeComponent();
+
+            setGuiElements();
             // MUSÍ BÝT VŽDY
             lsbMovies.ItemsSource = movies;
             
@@ -93,17 +98,10 @@ namespace DBMovies
 
         }
 
-        // Metoda pro zajištění přístupu do oken
-        protected override void OnClosing(CancelEventArgs e)
+        // HEAVY TODO
+        private void displayMovie(object sender, SelectionChangedEventArgs args)
         {
-            // Mění vlastnost vypínacího tlačíka (Právý horní křížek) tak,
-            // že Hlavní okno bude pouze skryto a znovu se zobrazí Autorizační okno.
-            if (wasAccessed)
-            {
-                e.Cancel = true;
-                Hide();
-                accessWindow = new AccessWindow(this);
-            }
+            new MovieWindow(this, (Movie)args.AddedItems[0]);
         }
 
         public void setGuiElements()
@@ -117,15 +115,27 @@ namespace DBMovies
                     btnDeleteMovie.IsEnabled = false;
                     break;
             }
+            txtKarma.Text = user.karma.ToString();
+            txtUserLogin.Text = user.login.ToString();
+            switch (user.privilegeLevel)
+            {
+                case 0: txtUserMode.Text = "Admin"; break;
+                case 1: txtUserMode.Text = "Moderator"; break;
+                case 2: txtUserMode.Text = "Uživatel"; break;
+            }
         }
-
-        // HEAVY TODO
-        private void displayMovie(object sender, SelectionChangedEventArgs args)
+        
+        // Metoda pro zajištění přístupu do oken
+        protected override void OnClosing(CancelEventArgs e)
         {
-            Movie ma = (Movie) args.AddedItems[0];
-            MovieWindow m = new MovieWindow(this);
-            m.tbName.Text = ma.titleWithYear;
-            m.tbScore.Text = ma.avgScore.ToString();
+            // Mění vlastnost vypínacího tlačíka (Právý horní křížek) tak,
+            // že Hlavní okno bude pouze skryto a znovu se zobrazí Autorizační okno.
+            if (wasAccessed)
+            {
+                e.Cancel = true;
+                Hide();
+                accessWindow = new AccessWindow(this);
+            }
         }
 
     }

@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DBMovies"
         mc:Ignorable="d"
-        Title="Hlavni_Stranka" Height="450" Width="800">
+        Title="DBSMovies" Height="450" Width="800">
 
     <Grid>
         <TextBox x:Name="txtUserMode" HorizontalAlignment="Left" Height="23" Margin="10,10,0,0" TextWrapping="Wrap" Text="Režim uživatele" VerticalAlignment="Top" Width="120" IsReadOnly="True"/>
@@ -17,16 +17,18 @@
         <Button x:Name="btnDeleteMovie" Content="-" HorizontalAlignment="Left" Margin="757,20,-40,0" VerticalAlignment="Top" Width="20"  Click="deleteMovie"/>
         
         <Border BorderBrush="Black" BorderThickness="2" Height="340" VerticalAlignment="Bottom">
-            <!-- https://wpf.2000things.com/2011/10/04/400-using-a-wrappanel-as-the-items-panel-for-a-listbox/ -->
             <ListBox x:Name="lsbMovies" SelectionChanged="displayMovie" SelectionMode="Single">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <StackPanel Orientation="Horizontal">
-                            <TextBlock x:Name="tbTitleYear" Text="{Binding titleWithYear}" />
+                            <TextBlock Text="{Binding titleWithYear}" />
                         </StackPanel>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
+            
+            
+            <!-- https://wpf.2000things.com/2011/10/04/400-using-a-wrappanel-as-the-items-panel-for-a-listbox/ -->
             <!-- <ListBox ItemsSource="{Binding movies}">
                 <ListBox.ItemTemplate>
                     <DataTemplate>

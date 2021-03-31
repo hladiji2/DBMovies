@@ -15,6 +15,7 @@ namespace DBMovies
     public partial class ReportForm : Form
     {
         string recipient;
+
         public ReportForm(string recipient)
         {
             InitializeComponent();
@@ -38,6 +39,7 @@ namespace DBMovies
                         System.Windows.MessageBox.Show("Message is incomplete.\nPlease try again.", "FAIL");
                 }
             }
+            Close();
         }
     }
 }

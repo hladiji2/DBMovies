@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DBMovies.model;
+using System;
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
@@ -11,12 +12,29 @@ namespace DBMovies
         MainWindow mainWindow;
 
         ReportForm f;
+        Movie movie;
 
-        public MovieWindow(MainWindow mainWindow)
+        // PRO TEST
+        int[] scoreArray = new int[2];
+
+        public MovieWindow(MainWindow mainWindow, Movie movie)
         {
             InitializeComponent();
+
             this.mainWindow = mainWindow;
+            this.movie = movie;
+
+            lsbComments.ItemsSource = movie.comments;
+
+            // PRO TEST
+            Title = movie.name.ToString();
+            tbName.Text = movie.name.ToString();
+            tbScore.Text = movie.avgScore.ToString();
+            scoreArray[0] = movie.avgScore;
+
+
             mainWindow.Hide();
+            setGuiElements();
             Show();
         }
 
@@ -25,8 +43,13 @@ namespace DBMovies
             // Při změně hodnocení v ComboBoxu
             // TODO změna v databázi
             // UPDATE DATABASE
-
             //cmbRating.SelectedIndex;
+
+
+            // PRO TEST
+            scoreArray[1] = cmbRating.SelectedIndex;
+            tbScore.Text = ((double)(scoreArray[0] + scoreArray[1])/2).ToString();
+
         }
 
         private void addComment(object sender, RoutedEventArgs e)
@@ -48,7 +71,8 @@ namespace DBMovies
         public void registerComment(string newComment)
         {
             // TODO INSERT INTO DATABASE
-
+            movie.comments.Add(newComment);
+            btnAddComment.IsEnabled = false;
         }
 
         private void deleteComment(object sender, RoutedEventArgs e)
@@ -56,6 +80,7 @@ namespace DBMovies
             // TODO ListBox metoda (asi) Selected
             // pokud nebude označený prvek v komentářích GUI, tak zobraz Warning Zprávu
             // pokud je označený komentář, tak
+            
         }
 
         private void adminReport(object sender, RoutedEventArgs e)
@@ -93,7 +118,7 @@ namespace DBMovies
                     cmbRating.IsEnabled = false;
                     btnAddComment.IsEnabled = false;
                     break;
-                case 3: // Uživatel
+                case 2: // Uživatel
                     btnAdminReport.IsEnabled = false;
                     btnDeleteComment.IsEnabled = false;
                     break;
