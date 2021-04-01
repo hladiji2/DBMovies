@@ -15,6 +15,7 @@ namespace DBMovies
         {
             InitializeComponent();
             this.mainWindow = mainWindow;
+            mainWindow.Hide();
             ResizeMode = ResizeMode.NoResize;
 
             Show();
@@ -43,7 +44,18 @@ namespace DBMovies
 
         private void authorize(object sender, RoutedEventArgs e)
         {
-            object[] userData = getUserDataIfExists(txtUserLogin.Text, txtUserPassword.Password);
+            // PRO TEST
+            object[] userData = new object[3] { txtUserLogin.Text.ToString(), 42, null};
+            switch (txtUserLogin.Text)
+            {
+                case "Admin": userData.SetValue((byte)0, 2); break;
+                case "Mod": userData.SetValue((byte)1, 2); break;
+                case "User": userData.SetValue((byte)2, 2); break;
+            }
+            
+
+
+            //object[] userData = getUserDataIfExists(txtUserLogin.Text, txtUserPassword.Password);
 
             if (userData.GetValue(0) != null)
             {

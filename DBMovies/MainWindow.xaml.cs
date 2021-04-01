@@ -24,7 +24,6 @@ namespace DBMovies
 
         public MainWindow()
         {
-            user = new User();
             movies = new ObservableCollection<Movie>
             {
                 new Movie("Terminator", "1984"),
@@ -36,7 +35,6 @@ namespace DBMovies
 
             InitializeComponent();
 
-            setGuiElements();
             // MUSÍ BÝT VŽDY
             lsbMovies.ItemsSource = movies;
             
@@ -46,10 +44,9 @@ namespace DBMovies
         void start()
         {
             // Skrýt hlavní okno pro autorizaci
-            //Hide();
             wasAccessed = false;
             ResizeMode = ResizeMode.NoResize;
-            //accessWindow = new AccessWindow(this);
+            accessWindow = new AccessWindow(this);
 
             //movieWindow = new MovieWindow(this);
         }
@@ -136,6 +133,8 @@ namespace DBMovies
                 Hide();
                 accessWindow = new AccessWindow(this);
             }
+            else
+                System.Windows.Application.Current.Shutdown();
         }
 
     }
