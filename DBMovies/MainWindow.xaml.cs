@@ -103,22 +103,22 @@ namespace DBMovies
 
         public void setGuiElements()
         {
-            switch (user.privilegeLevel)
+            switch (user.privilege)
             {
                 // TODO změnit viditelnost prvků gui podle oprávnění
                 case 1: // Moderator
-                case 2: // User
+                case 0: // User
                     btnAddMovie.IsEnabled = false;
                     btnDeleteMovie.IsEnabled = false;
                     break;
             }
             txtKarma.Text = user.karma.ToString();
             txtUserLogin.Text = user.login.ToString();
-            switch (user.privilegeLevel)
+            switch (user.privilege)
             {
-                case 0: txtUserMode.Text = "Admin"; break;
+                case 2: txtUserMode.Text = "Admin"; break;
                 case 1: txtUserMode.Text = "Moderator"; break;
-                case 2: txtUserMode.Text = "Uživatel"; break;
+                case 0: txtUserMode.Text = "Uživatel"; break;
             }
         }
         

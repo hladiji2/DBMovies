@@ -105,10 +105,10 @@ namespace DBMovies
 
         public void setGuiElements()
         {
-            switch (mainWindow.user.privilegeLevel)
+            switch (mainWindow.user.privilege)
             {
                 // TODO změnit viditelnost prvků gui podle oprávnění
-                case 0: // Admin
+                case 2: // Admin
                     cmbRating.IsEnabled = false;
                     btnAddComment.IsEnabled = false;
                     btnAdminReport.IsEnabled = false;
@@ -118,7 +118,7 @@ namespace DBMovies
                     cmbRating.IsEnabled = false;
                     btnAddComment.IsEnabled = false;
                     break;
-                case 2: // Uživatel
+                case 0: // Uživatel
                     btnAdminReport.IsEnabled = false;
                     btnDeleteComment.IsEnabled = false;
                     break;

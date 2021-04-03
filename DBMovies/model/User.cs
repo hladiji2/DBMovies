@@ -4,16 +4,17 @@ namespace DBMovies.model
 {
     public class User
     {
+        public int id;
         public string login { get; set; }
         public int karma { get; set; }
-        public byte privilegeLevel { get; set; }
+        public int privilege { get; set; }
 
         // Úplná tvorba
-        public User(string login, int karma, byte privilegeLevel)
+        public User(string login, int karma, int privilege)
         {
             this.login = login;
             this.karma = karma;
-            this.privilegeLevel = privilegeLevel;
+            this.privilege = privilege;
         }
 
         // Admin
@@ -22,7 +23,7 @@ namespace DBMovies.model
             login = adminLogin;
             karma = 9000;
             // TODO Může se změnit
-            privilegeLevel = 0;
+            privilege = 2;
         }
 
         // Náhodně generovaný
@@ -36,13 +37,13 @@ namespace DBMovies.model
             }
             karma = r.Next(0, 9000);
             // TODO může se změnit
-            privilegeLevel = (byte) r.Next(0,3);
+            privilege = Convert.ToInt32(r.Next(0,3));
         }
         public override string ToString()
         {
             return string.Format(
                 "Login: {0}\nLevel Access: {1}\nKarma: {2}",
-                login, privilegeLevel, karma);
+                login, privilege, karma);
         }
     }
 }

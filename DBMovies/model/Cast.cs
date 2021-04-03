@@ -1,13 +1,15 @@
 ﻿namespace DBMovies.model
 {
-    class Member
+    class Cast
     {
-        private string name { get; set; }
-        private string surname { get; set; }
-        private string role { get; set; }
+        public int id { get; set; }
+        public string name { get; set; }
+        public string surname { get; set; }
+        public string role { get; set; }
 
-        public Member(string name, string surname, string role)
+        public Cast(int id, string name, string surname, string role)
         {
+            this.id = id;
             this.name = name;
             this.surname = surname;
             this.role = role;

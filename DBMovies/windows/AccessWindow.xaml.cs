@@ -5,6 +5,7 @@ using System.Data.SqlClient;
 using System.Windows;
 using System.Windows.Media;
 using System.Configuration;
+using Oracle.ManagedDataAccess.Client;
 
 namespace DBMovies
 {
@@ -24,7 +25,7 @@ namespace DBMovies
         }
         public bool isDBConnected()
         {
-            using (SqlConnection cnn = new SqlConnection(ConfigurationManager.ConnectionStrings["cnns0"].ConnectionString))
+            using (OracleConnection cnn = new OracleConnection(ConfigurationManager.ConnectionStrings["cnns1"].ConnectionString))
             {
                 try
                 {

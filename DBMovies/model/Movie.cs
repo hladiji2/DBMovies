@@ -23,8 +23,6 @@ namespace DBMovies.model
         
         public string titleWithYear { get; set; }
 
-        public Image image;
-
 
         public static Random r = new Random();
 
@@ -69,11 +67,6 @@ namespace DBMovies.model
             genre = new string[0];
             releaseDate = r.Next(1900, 2022).ToString();
             titleWithYear = string.Format("{0} ({1})", name, releaseDate);
-        }
-
-        public char getFirstLetter()
-        {
-            return char.Parse(name.Substring(0, 1));
         }
 
         public override string ToString()
