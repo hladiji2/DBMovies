@@ -8,21 +8,13 @@ namespace DBMovies.model
     public class Movie
     {
         public int id { get; set; }
-
         public string name { get; set; }
-
         public byte avgScore { get; set; }
-
         public ObservableCollection<string> comments { get; set; }
-
         public string[] cast { get; set; }
-
         public string[] genre { get; set; }
-
         public string releaseDate { get; set; }
-        
         public string titleWithYear { get; set; }
-
 
         public static Random r = new Random();
 
