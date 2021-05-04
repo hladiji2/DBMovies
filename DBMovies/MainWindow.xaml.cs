@@ -8,6 +8,7 @@ using System.Collections.ObjectModel;
 using System.Windows.Forms;
 using DBMovies;
 using System.Windows.Controls;
+using System.Data.SqlClient;
 
 namespace DBMovies
 {
@@ -31,11 +32,8 @@ namespace DBMovies
                 new Movie("The Room", "2006")
             };
 
-
-
             InitializeComponent();
 
-            // MUSÍ BÝT VŽDY
             lsbMovies.ItemsSource = movies;
             
             start();
@@ -68,11 +66,10 @@ namespace DBMovies
 
         /* 
          * object[0] String     - Název Filmu
-         * object[1] String     - Rok Vydání
+         * object[1] DateTime   - Rok Vydání
          * object[2] String     - Název Režiséra
          * object[3] string[]   - Názvy Herců
          * object[4] string[]   - Názvy Žánrů
-         * object[...] ...     - ...
          * 
          * Volá se ve Formuláři NewMovieForm.
         */
@@ -80,12 +77,37 @@ namespace DBMovies
         {
             // TODO INSERT INTO DATABASE
             string nazev = (string)movieData[0];
-            string rok = (string)movieData[1];
+            DateTime rok = (DateTime)movieData[1];
             string reziser = (string)movieData[2];
             string[] herci = (string[])movieData[3];
             string[] zanry = (string[])movieData[4];
-
             
+            using (SqlConnection cnn = new SqlConnection(ConfigurationManager.ConnectionStrings["cnns0"].ConnectionString))
+            {
+                try
+                {
+                    string INSERT = "INSERT INTO \"Movie\" (Name, Releasedate) Values (" + nazev + "," + rok + ")";
+
+                    SqlCommand cmd = new SqlCommand(INSERT, cnn);
+                    cnn.Open();
+                    cmd.ExecuteNonQuery();
+
+                    INSERT = "INSERT INTO \"Cast\" (FullName) Values (" + reziser + ")";
+                    cmd.ExecuteNonQuery();
+
+                    foreach (string s in herci)
+                    {
+                        INSERT = "INSERT INTO \"Cast\" (FullName) Values (" + reziser + ")";
+                    }
+
+                }
+                catch (SqlException e)
+                {
+                    Console.WriteLine(e.Message);
+                }
+            }
+            
+
         }
 
         private void deleteMovie(object sender, RoutedEventArgs e)
@@ -105,21 +127,21 @@ namespace DBMovies
         {
             switch (user.privilege)
             {
-                // TODO změnit viditelnost prvků gui podle oprávnění
-                case 1: // Moderator
-                case 0: // User
+                case 3: // Admin
+                    txtUserMode.Text = "Admin"; break;
+                case 2: // Moderator
                     btnAddMovie.IsEnabled = false;
                     btnDeleteMovie.IsEnabled = false;
+                    txtUserMode.Text = "Moderator";
+                    break;
+                case 1: // User
+                    btnAddMovie.IsEnabled = false;
+                    btnDeleteMovie.IsEnabled = false;
+                    txtUserMode.Text = "Uživatel";
                     break;
             }
             txtKarma.Text = user.karma.ToString();
-            txtUserLogin.Text = user.login.ToString();
-            switch (user.privilege)
-            {
-                case 2: txtUserMode.Text = "Admin"; break;
-                case 1: txtUserMode.Text = "Moderator"; break;
-                case 0: txtUserMode.Text = "Uživatel"; break;
-            }
+            txtUserLogin.Text = user.login;
         }
         
         // Metoda pro zajištění přístupu do oken

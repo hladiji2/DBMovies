@@ -4,14 +4,15 @@ namespace DBMovies.model
 {
     public class User
     {
-        public int id;
+        public decimal id;
         public string login { get; set; }
-        public int karma { get; set; }
-        public int privilege { get; set; }
+        public decimal karma { get; set; }
+        public decimal privilege { get; set; }
 
         // Úplná tvorba
-        public User(string login, int karma, int privilege)
+        public User(decimal id, string login, decimal karma, decimal privilege)
         {
+            this.id = id;
             this.login = login;
             this.karma = karma;
             this.privilege = privilege;

@@ -5,13 +5,14 @@ using System.Data.SqlClient;
 using System.Windows;
 using System.Windows.Media;
 using System.Configuration;
-using Oracle.ManagedDataAccess.Client;
+using System.Diagnostics;
 
 namespace DBMovies
 {
     public partial class AccessWindow : Window
     {
         private MainWindow mainWindow;
+        public User s;
         public AccessWindow(MainWindow mainWindow)
         {
             InitializeComponent();
@@ -25,7 +26,9 @@ namespace DBMovies
         }
         public bool isDBConnected()
         {
-            using (OracleConnection cnn = new OracleConnection(ConfigurationManager.ConnectionStrings["cnns1"].ConnectionString))
+            txtUserLogin.Text = "hladiji2";
+            txtUserPassword.Password = "pwd";
+            using (SqlConnection cnn = new SqlConnection(ConfigurationManager.ConnectionStrings["cnns0"].ConnectionString))
             {
                 try
                 {
@@ -45,32 +48,20 @@ namespace DBMovies
 
         private void authorize(object sender, RoutedEventArgs e)
         {
-            // PRO TEST
-            object[] userData = new object[3] { txtUserLogin.Text.ToString(), 42, null};
-            switch (txtUserLogin.Text)
-            {
-                case "Admin": userData.SetValue((byte)0, 2); break;
-                case "Mod": userData.SetValue((byte)1, 2); break;
-                case "User": userData.SetValue((byte)2, 2); break;
-            }
+            object[] userData = getUserDataIfExists(txtUserLogin.Text, txtUserPassword.Password);
             
-
-
-            //object[] userData = getUserDataIfExists(txtUserLogin.Text, txtUserPassword.Password);
-
             if (userData.GetValue(0) != null)
             {
-                //TODO SWITCH předat informace o uživateli Hlavnímu oknu
-                switch (userData.GetValue(2))
+                switch (userData.GetValue(1))
                 {
-                    case 0: mainWindow.txtUserMode.Text = "Admin"; break;
-                    case 1: mainWindow.txtUserMode.Text = "Moderátor"; break;
-                    case 2: mainWindow.txtUserMode.Text = "Uživatel"; break;
+                    case 1: mainWindow.txtUserMode.Text = "Uživatel"; break;
+                    case 2: mainWindow.txtUserMode.Text = "Moderátor"; break;
+                    case 3: mainWindow.txtUserMode.Text = "Admin"; break;
                 }
-                mainWindow.txtUserLogin.Text = txtUserLogin.Text;
+                mainWindow.txtUserLogin.Text = (string) userData.GetValue(2);
                 mainWindow.wasAccessed = true;
                 //TODO informace o uživateli pro ostatní okna
-                mainWindow.user = new User((string)userData.GetValue(0), (int)userData.GetValue(1), (byte)userData.GetValue(2)); ;
+                mainWindow.user = new User((decimal)userData.GetValue(0),(string) userData.GetValue(2) ,(decimal)userData.GetValue(3), (decimal)userData.GetValue(1));
 
                 Hide();
                 mainWindow.setGuiElements();
@@ -79,9 +70,9 @@ namespace DBMovies
             else
             {
                 txtUserLogin.Text = "";
-                txtUserPassword.Password = "";
                 MessageBox.Show("Wrong username or password.\nPlease try again.", "FAIL");
             }
+            
         }
 
         //TODO
@@ -91,30 +82,30 @@ namespace DBMovies
             {
                 try
                 {
-                    object[] userData = new object[3];
-                    cnn.Open();
-                    string SELECT = @"SELECT * FROM !!! WHERE !!!=" + login + " AND !!!=" + password;
-                    // TODO              ??počet sloupců dat uživatele??
+                    object[] userData = new object[4];
                     
-                    using (SqlCommand cmd = new SqlCommand(SELECT, cnn))
-                    {
-                        SqlDataReader dataReader = cmd.ExecuteReader();
+                    string SELECT = "SELECT UserID, PermissionID, Username, Karma FROM \"User\" WHERE Username='" + login + "' AND Password='" + password + "'";
+                   
+                    SqlCommand cmd = new SqlCommand(SELECT, cnn);
+                    cnn.Open();
 
+                    using (SqlDataReader dataReader = cmd.ExecuteReader())
+                    {
                         while (dataReader.Read())
                         {
-                            // TODO       ??počet sloupců dat uživatele??
-                            userData[0] = dataReader.GetString(0); // Login
-                            userData[1] = dataReader.GetInt32(1); // Karma
-                            userData[2] = dataReader.GetByte(2); // Úroveň práv
+                            userData[0] = dataReader.GetDecimal(0); // ID
+                            userData[1] = dataReader.GetDecimal(1); // Úroveň práv
+                            userData[2] = dataReader.GetString(2); // Login
+                            userData[3] = dataReader.GetDecimal(3); // Karma
                         }
                     }
+                    
                     return userData;
                 }
                 catch (SqlException)
                 {
                     return new object[] { null };
                 }
-                
             }
         }
 

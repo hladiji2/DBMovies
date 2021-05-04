@@ -26,7 +26,7 @@ namespace DBMovies
             // Název Filmu
             newMovieData[0] = txtMovieName.Text;
             // Rok Vydání
-            newMovieData[1] = txtReleaseDate.Text;
+            newMovieData[1] = getRelaseDateTime();
             // Jméno Režiséra
             newMovieData[2] = txtDirector.Text;
 
@@ -38,6 +38,11 @@ namespace DBMovies
 
             // Předává ze současného formuláře do metody Hlavního okna
             ((MainWindow) System.Windows.Application.Current.MainWindow).registerMovie(newMovieData);
+        }
+        private DateTime getRelaseDateTime() 
+        {
+            string[] release = txtReleaseDate.Text.Split('.');
+            return new DateTime(Convert.ToInt32(release[2]), Convert.ToInt32(release[1]), Convert.ToInt32(release[0]));
         }
 
         private string[] getActorsNames()

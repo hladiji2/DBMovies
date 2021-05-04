@@ -13,13 +13,13 @@ namespace DBMovies.model
         public ObservableCollection<string> comments { get; set; }
         public string[] cast { get; set; }
         public string[] genre { get; set; }
-        public string releaseDate { get; set; }
+        public DateTime releaseDate { get; set; }
         public string titleWithYear { get; set; }
 
         public static Random r = new Random();
 
         // TODO, Image
-        public Movie(int id, string name, ObservableCollection<string> comments, string[] cast, string[] genre, string releaseDate)
+        public Movie(int id, string name, ObservableCollection<string> comments, string[] cast, string[] genre, DateTime releaseDate)
         {
             this.id = id;
             this.name = name;
@@ -32,7 +32,7 @@ namespace DBMovies.model
         }
 
         // RANDOM - základní informace
-        public Movie(string name, string releaseDate)
+        public Movie(string name, DateTime releaseDate)
         {
             this.name = name;
             avgScore = (byte)r.Next(0, 11);
@@ -57,7 +57,7 @@ namespace DBMovies.model
             comments = new ObservableCollection<string> { "Super", "Pecka", "Fuuuuj", "Mohlo být lepší" };
             cast = new string[0];
             genre = new string[0];
-            releaseDate = r.Next(1900, 2022).ToString();
+            releaseDate = new DateTime(r.Next(1900, 2022), r.Next(1, 12), r.Next(1, 30));
             titleWithYear = string.Format("{0} ({1})", name, releaseDate);
         }
 
