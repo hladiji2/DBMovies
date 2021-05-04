@@ -28,6 +28,7 @@ namespace DBMovies
         {
             txtUserLogin.Text = "hladiji2";
             txtUserPassword.Password = "pwd";
+
             using (SqlConnection cnn = new SqlConnection(ConfigurationManager.ConnectionStrings["cnns0"].ConnectionString))
             {
                 try
@@ -65,6 +66,7 @@ namespace DBMovies
 
                 Hide();
                 mainWindow.setGuiElements();
+                mainWindow.setMovies();
                 mainWindow.Show();
             }
             else
@@ -75,7 +77,6 @@ namespace DBMovies
             
         }
 
-        //TODO
         private object[] getUserDataIfExists(string login, string password)
         {
             using (SqlConnection cnn = new SqlConnection(ConfigurationManager.ConnectionStrings["cnns0"].ConnectionString))
@@ -99,7 +100,6 @@ namespace DBMovies
                             userData[3] = dataReader.GetDecimal(3); // Karma
                         }
                     }
-                    
                     return userData;
                 }
                 catch (SqlException)

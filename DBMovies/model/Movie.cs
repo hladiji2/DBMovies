@@ -7,7 +7,7 @@ namespace DBMovies.model
 {
     public class Movie
     {
-        public int id { get; set; }
+        public decimal id { get; set; }
         public string name { get; set; }
         public byte avgScore { get; set; }
         public ObservableCollection<string> comments { get; set; }
@@ -18,7 +18,19 @@ namespace DBMovies.model
 
         public static Random r = new Random();
 
-        // TODO, Image
+
+        public Movie(decimal id, string name, DateTime releaseDate)
+        {
+            this.id = id;
+            this.name = name;
+            avgScore = 0;
+            this.comments = null;
+            this.cast = null;
+            this.genre = null;
+            this.releaseDate = releaseDate;
+            titleWithYear = string.Format("{0} ({1})", name, releaseDate);
+        }
+
         public Movie(int id, string name, ObservableCollection<string> comments, string[] cast, string[] genre, DateTime releaseDate)
         {
             this.id = id;

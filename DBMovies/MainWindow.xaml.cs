@@ -25,12 +25,7 @@ namespace DBMovies
 
         public MainWindow()
         {
-            movies = new ObservableCollection<Movie>
-            {
-                new Movie("Terminator", "1984"),
-                new Movie("Blabla", "2021"),
-                new Movie("The Room", "2006")
-            };
+            movies = new ObservableCollection<Movie>();
 
             InitializeComponent();
 
@@ -84,20 +79,32 @@ namespace DBMovies
             
             using (SqlConnection cnn = new SqlConnection(ConfigurationManager.ConnectionStrings["cnns0"].ConnectionString))
             {
+                string INSERT = "INSERT INTO \"Movie\" (Name, Releasedate) Values (" + nazev + "," + rok + ")";
                 try
                 {
-                    string INSERT = "INSERT INTO \"Movie\" (Name, Releasedate) Values (" + nazev + "," + rok + ")";
-
                     SqlCommand cmd = new SqlCommand(INSERT, cnn);
                     cnn.Open();
+                    // přidá film do Movie
+                    cmd.ExecuteNonQuery();
+                    // zjistíme nově vytvořené id filmu a přidáme film do naší kolekce
+                    cmd.CommandText = "SELECT MovieID FROM \"Movie\" WHERE Name='" + nazev + "'";
+                    decimal MovieId = (decimal)cmd.ExecuteScalar();
+                    movies.Add(new Movie(MovieId, nazev, rok));
+
+                    cmd.CommandText = "INSERT INTO \"Cast\" (FullName) Values ('" + reziser + "')";
                     cmd.ExecuteNonQuery();
 
-                    INSERT = "INSERT INTO \"Cast\" (FullName) Values (" + reziser + ")";
+                    cmd.CommandText = "INSERT INTO \"Role\" (MovieID) Values ('" + MovieId + "')";
                     cmd.ExecuteNonQuery();
 
                     foreach (string s in herci)
                     {
-                        INSERT = "INSERT INTO \"Cast\" (FullName) Values (" + reziser + ")";
+                        cmd.CommandText = "INSERT INTO \"Cast\" (FullName) Values (" + reziser + ")";
+                        cmd.ExecuteNonQuery();
+                        /*
+                        cmd.CommandText = "SELECT MovieID FROM \"Movie\" WHERE Username='" + login + "' AND Password='" + password + "'";
+                        cmd.ExecuteNonQuery();
+                        */
                     }
 
                 }
@@ -106,8 +113,6 @@ namespace DBMovies
                     Console.WriteLine(e.Message);
                 }
             }
-            
-
         }
 
         private void deleteMovie(object sender, RoutedEventArgs e)
@@ -143,7 +148,35 @@ namespace DBMovies
             txtKarma.Text = user.karma.ToString();
             txtUserLogin.Text = user.login;
         }
-        
+        public void setMovies()
+        {
+            using (SqlConnection cnn = new SqlConnection(ConfigurationManager.ConnectionStrings["cnns0"].ConnectionString))
+            {
+                try
+                {
+                    string SELECT = "SELECT * FROM \"Movie\"";
+
+                    SqlCommand cmd = new SqlCommand(SELECT, cnn);
+                    cnn.Open();
+
+                    using (SqlDataReader dataReader = cmd.ExecuteReader())
+                    {
+                        while (dataReader.Read())
+                        {
+                            decimal movieId = dataReader.GetDecimal(0); // ID
+                            string name = dataReader.GetString(1); // Název
+                            DateTime d = dataReader.GetDateTime(2); // Datum vydání
+                            movies.Add(new Movie(movieId,name,d));
+                        }
+                    }
+                }
+                catch (SqlException e)
+                {
+                    Console.WriteLine(e.Message);
+                }
+            }
+        }
+
         // Metoda pro zajištění přístupu do oken
         protected override void OnClosing(CancelEventArgs e)
         {

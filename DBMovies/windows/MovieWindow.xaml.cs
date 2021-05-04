@@ -108,17 +108,17 @@ namespace DBMovies
             switch (mainWindow.user.privilege)
             {
                 // TODO změnit viditelnost prvků gui podle oprávnění
-                case 2: // Admin
+                case 3: // Admin
                     cmbRating.IsEnabled = false;
                     btnAddComment.IsEnabled = false;
                     btnAdminReport.IsEnabled = false;
                     btnDeleteComment.IsEnabled = false;
                     break;
-                case 1: // Moderator
+                case 2: // Moderator
                     cmbRating.IsEnabled = false;
                     btnAddComment.IsEnabled = false;
                     break;
-                case 0: // Uživatel
+                case 1: // Uživatel
                     btnAdminReport.IsEnabled = false;
                     btnDeleteComment.IsEnabled = false;
                     break;

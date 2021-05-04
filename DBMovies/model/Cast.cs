@@ -2,30 +2,22 @@
 {
     class Cast
     {
-        public int id { get; set; }
-        public string name { get; set; }
-        public string surname { get; set; }
+        public decimal id { get; set; }
+        public string fullName { get; set; }
         public string role { get; set; }
 
-        public Cast(int id, string name, string surname, string role)
+        public Cast(decimal id, string fullName, string role)
         {
             this.id = id;
-            this.name = name;
-            this.surname = surname;
+            this.fullName = fullName;
             this.role = role;
-        }
-
-        public string getFullName()
-        {
-            return string.Format("{0} {1}", name, surname);
         }
 
         public override string ToString()
         {
             return string.Format(
-                "Name: {0}\nSurname: {1}\nRole: {2}",
-                name, surname, role);
+                "Name: {0}\nRole: {1}",
+                fullName, role);
         }
-
     }
 }
