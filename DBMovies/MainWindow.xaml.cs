@@ -79,44 +79,68 @@ namespace DBMovies
             
             using (SqlConnection cnn = new SqlConnection(ConfigurationManager.ConnectionStrings["cnns0"].ConnectionString))
             {
-                string INSERT = "INSERT INTO \"Movie\" (Name, Releasedate) Values (" + nazev + "," + rok + ")";
+                string INSERT = "INSERT INTO \"Movie\" (Name, Releasedate) Values ('" + nazev + "','" + rok + "')";
                 try
                 {
                     SqlCommand cmd = new SqlCommand(INSERT, cnn);
                     cnn.Open();
+
+                    // ověřit, jestli existuje
+                    cmd.CommandText = "SELECT MovieID FROM \"Movie\" WHERE Name='" + nazev + "'";
+                    
+                    int result = Convert.ToInt32(cmd.ExecuteScalar());
+                    if (result != 0)
+                    {
+                        System.Windows.MessageBox.Show("Movie already exists.\nPlease try again.", "FAIL");
+                        return;
+                    }
+
+                    cmd.CommandText = INSERT;
                     // přidá film do Movie tabulky
                     cmd.ExecuteNonQuery();
                     // zjistíme nově vytvořené id filmu a přidáme film do naší kolekce
                     cmd.CommandText = "SELECT MovieID FROM \"Movie\" WHERE Name='" + nazev + "'";
-                    decimal MovieId = Convert.ToDecimal(cmd.ExecuteScalar());
+                    decimal movieId = Convert.ToDecimal(cmd.ExecuteScalar());
 
-                    Movie m = new Movie(MovieId, nazev, rok);
+                    Movie m = new Movie(movieId, nazev, rok);
                     m.director = reziser;
                     m.cast = herci;
                     m.genre = zanry;
                     movies.Add(m);
 
-                    // TODO DBS
-                    // zaregistruj režiséra
                     cmd.CommandText = "INSERT INTO \"Cast\" (FullName) Values ('" + reziser + "')";
                     cmd.ExecuteNonQuery();
-                    cmd.CommandText = "SELECT CastID FROM \"Cast\" WHERE Name='" + reziser + "'";
-                    decimal CastId = Convert.ToDecimal(cmd.ExecuteScalar());
+                    cmd.CommandText = "SELECT CastID FROM \"Cast\" WHERE FullName='" + reziser + "'";
+                    decimal castId = Convert.ToDecimal(cmd.ExecuteScalar());
 
-                    cmd.CommandText = "INSERT INTO \"Role\" (MovieID, Name, Salary, CastID) Values ('" + MovieId + "','director','130000','" + CastId + "')";
+                    cmd.CommandText = "INSERT INTO \"Role\" (MovieID, Name, Salary, CastID) Values ('" + movieId + "','director','130000','" + castId + "')";
                     cmd.ExecuteNonQuery();
-                    /*
-                    foreach (string s in herci)
+                    
+                    foreach (string name in herci)
                     {
-                        cmd.CommandText = "INSERT INTO \"Cast\" (FullName) Values (" + reziser + ")";
+                        cmd.CommandText = "INSERT INTO \"Cast\" (FullName) Values ('" + name + "')";
                         cmd.ExecuteNonQuery();
-                        
-                        cmd.CommandText = "SELECT MovieID FROM \"Movie\" WHERE Username='" + login + "' AND Password='" + password + "'";
-                        cmd.ExecuteNonQuery();
-                        
-                    }
-                    */
+                        cmd.CommandText = "SELECT CastID FROM \"Cast\" WHERE FullName='" + name + "'";
+                        castId = Convert.ToDecimal(cmd.ExecuteScalar());
 
+                        cmd.CommandText = "INSERT INTO \"Role\" (MovieID, Name, Salary, CastID) Values ('" + movieId + "','actor','50000','" + castId + "')";
+                        cmd.ExecuteNonQuery();
+                    }
+                    decimal genreId;
+
+                    foreach (string genre in zanry)
+                    {
+                        cmd.CommandText = "INSERT INTO \"Genre\" (Name) Values ('" + genre + "')";
+                        cmd.ExecuteNonQuery();
+                        cmd.CommandText = "SELECT GenreID FROM \"Genre\" WHERE Name='" + genre + "'";
+                        genreId = Convert.ToDecimal(cmd.ExecuteScalar());
+
+                        cmd.CommandText = "INSERT INTO \"Genremix\" (MovieID, GenreID) Values ('" + movieId + "','" + genreId + "')";
+                        cmd.ExecuteNonQuery();
+                    }
+
+                    f.Dispose();
+                    f = null;
                 }
                 catch (SqlException e)
                 {

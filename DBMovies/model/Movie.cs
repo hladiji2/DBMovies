@@ -25,9 +25,7 @@ namespace DBMovies.model
             this.id = id;
             this.name = name;
             avgScore = 0;
-            this.comments = null;
-            this.cast = null;
-            this.genre = null;
+            comments = new ObservableCollection<string>();
             this.releaseDate = releaseDate;
             titleWithYear = string.Format("{0} ({1})", name, releaseDate);
         }

@@ -35,6 +35,6 @@ Insert into "Movie" ("Name","Releasedate","MovieID") values ('Iron Man',to_date(
 Insert into "Movie" ("Name","Releasedate","MovieID") values ('Terminator',to_date('20.12.84','DD.MM.RR'),'3');
 Insert into "Movie" ("Name","Releasedate","MovieID") values ('Dirty Grandpa',to_date('22.01.16','DD.MM.RR'),'4');
 Insert into "Movie" ("Name","Releasedate","MovieID") values ('Irishman',to_date('27.09.19','DD.MM.RR'),'5');
-Insert into "Permission" ("Privilege","PermissionID") values ('User','0');
-Insert into "Permission" ("Privilege","PermissionID") values ('Moderator','1');
-Insert into "Permission" ("Privilege","PermissionID") values ('Admin','2');
+Insert into "Permission" ("Privilege") values ('User');
+Insert into "Permission" ("Privilege") values ('Moderator');
+Insert into "Permission" ("Privilege") values ('Admin');

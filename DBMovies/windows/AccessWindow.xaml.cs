@@ -66,7 +66,8 @@ namespace DBMovies
 
                 Hide();
                 mainWindow.setGuiElements();
-                mainWindow.setMovies();
+                if(mainWindow.movies.Count == 0)
+                    mainWindow.setMovies();
                 mainWindow.Show();
             }
             else

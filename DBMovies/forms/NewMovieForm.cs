@@ -8,6 +8,11 @@ namespace DBMovies
         public NewMovieForm()
         {
             InitializeComponent();
+            txtMovieName.Text = "Matrix";
+            txtReleaseDate.Text = "1.1.1999";
+            txtDirector.Text = "Wachowski";
+            txtActors.Text = "Keanu Revees, Laurence Fishburne";
+            txtGenre.Text = "Akční, Sci-fi";
         }
 
         private void btnRegister_Click(object sender, EventArgs e)
@@ -22,7 +27,7 @@ namespace DBMovies
         private void processData()
         {
             // TODO Kolik jednotek dat do databáze?
-            object[] newMovieData = new object[4];
+            object[] newMovieData = new object[5];
             // Název Filmu
             newMovieData[0] = txtMovieName.Text;
             // Rok Vydání
