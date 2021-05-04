@@ -127,10 +127,10 @@ namespace DBMovies
             this.label5.BackColor = System.Drawing.Color.Transparent;
             this.label5.Location = new System.Drawing.Point(12, 128);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(172, 39);
+            this.label5.Size = new System.Drawing.Size(166, 39);
             this.label5.TabIndex = 9;
             this.label5.Text = "* Zadejte mezi názvy čárku např.:\r\nKeanu Revees, Sandra Bullock\r\nAkční, Thriller," +
-    " Akční-Dobrodružná";
+    " Dobrodružná";
             // 
             // txtReleaseDate
             // 

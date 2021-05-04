@@ -11,6 +11,7 @@ namespace DBMovies.model
         public string name { get; set; }
         public byte avgScore { get; set; }
         public ObservableCollection<string> comments { get; set; }
+        public string director { get; set; }
         public string[] cast { get; set; }
         public string[] genre { get; set; }
         public DateTime releaseDate { get; set; }

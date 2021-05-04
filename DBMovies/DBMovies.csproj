@@ -87,6 +87,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="DBMoviesDataSet.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DBMoviesDataSet.xsd</DependentUpon>
+    </Compile>
     <Compile Include="windows\AccessWindow.xaml.cs">
       <DependentUpon>AccessWindow.xaml</DependentUpon>
     </Compile>
@@ -96,7 +101,6 @@
     <Compile Include="forms\ReportForm.Designer.cs">
       <DependentUpon>ReportForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="model\Cast.cs" />
     <Compile Include="model\Movie.cs" />
     <Compile Include="model\User.cs" />
     <Compile Include="forms\NewMovieForm.cs">
@@ -153,6 +157,17 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="DBMoviesDataSet.xsc">
+      <DependentUpon>DBMoviesDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="DBMoviesDataSet.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>DBMoviesDataSet.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="DBMoviesDataSet.xss">
+      <DependentUpon>DBMoviesDataSet.xsd</DependentUpon>
+    </None>
     <None Include="files\DBMovies_Models.eap" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">

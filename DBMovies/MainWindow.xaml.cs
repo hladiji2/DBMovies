@@ -84,28 +84,38 @@ namespace DBMovies
                 {
                     SqlCommand cmd = new SqlCommand(INSERT, cnn);
                     cnn.Open();
-                    // přidá film do Movie
+                    // přidá film do Movie tabulky
                     cmd.ExecuteNonQuery();
                     // zjistíme nově vytvořené id filmu a přidáme film do naší kolekce
                     cmd.CommandText = "SELECT MovieID FROM \"Movie\" WHERE Name='" + nazev + "'";
-                    decimal MovieId = (decimal)cmd.ExecuteScalar();
-                    movies.Add(new Movie(MovieId, nazev, rok));
+                    decimal MovieId = Convert.ToDecimal(cmd.ExecuteScalar());
 
+                    Movie m = new Movie(MovieId, nazev, rok);
+                    m.director = reziser;
+                    m.cast = herci;
+                    m.genre = zanry;
+                    movies.Add(m);
+
+                    // TODO DBS
+                    // zaregistruj režiséra
                     cmd.CommandText = "INSERT INTO \"Cast\" (FullName) Values ('" + reziser + "')";
                     cmd.ExecuteNonQuery();
+                    cmd.CommandText = "SELECT CastID FROM \"Cast\" WHERE Name='" + reziser + "'";
+                    decimal CastId = Convert.ToDecimal(cmd.ExecuteScalar());
 
-                    cmd.CommandText = "INSERT INTO \"Role\" (MovieID) Values ('" + MovieId + "')";
+                    cmd.CommandText = "INSERT INTO \"Role\" (MovieID, Name, Salary, CastID) Values ('" + MovieId + "','director','130000','" + CastId + "')";
                     cmd.ExecuteNonQuery();
-
+                    /*
                     foreach (string s in herci)
                     {
                         cmd.CommandText = "INSERT INTO \"Cast\" (FullName) Values (" + reziser + ")";
                         cmd.ExecuteNonQuery();
-                        /*
+                        
                         cmd.CommandText = "SELECT MovieID FROM \"Movie\" WHERE Username='" + login + "' AND Password='" + password + "'";
                         cmd.ExecuteNonQuery();
-                        */
+                        
                     }
+                    */
 
                 }
                 catch (SqlException e)
