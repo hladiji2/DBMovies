@@ -92,6 +92,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>DBMoviesDataSet.xsd</DependentUpon>
     </Compile>
+    <Compile Include="model\Cast.cs" />
     <Compile Include="windows\AccessWindow.xaml.cs">
       <DependentUpon>AccessWindow.xaml</DependentUpon>
     </Compile>

@@ -9,7 +9,6 @@ namespace DBMovies.model
     {
         public decimal id { get; set; }
         public string name { get; set; }
-        public byte avgScore { get; set; }
         public ObservableCollection<string> comments { get; set; }
         public string director { get; set; }
         public string[] cast { get; set; }
@@ -17,14 +16,10 @@ namespace DBMovies.model
         public DateTime releaseDate { get; set; }
         public string titleWithYear { get; set; }
 
-        public static Random r = new Random();
-
-
         public Movie(decimal id, string name, DateTime releaseDate)
         {
             this.id = id;
             this.name = name;
-            avgScore = 0;
             comments = new ObservableCollection<string>();
             this.releaseDate = releaseDate;
             titleWithYear = string.Format("{0} ({1})", name, releaseDate);
@@ -34,7 +29,6 @@ namespace DBMovies.model
         {
             this.id = id;
             this.name = name;
-            avgScore = 0;
             this.comments = comments;
             this.cast = cast;
             this.genre = genre;
@@ -42,41 +36,20 @@ namespace DBMovies.model
             titleWithYear = string.Format("{0} ({1})", name, releaseDate);
         }
 
-        // RANDOM - základní informace
-        public Movie(string name, DateTime releaseDate)
+        public string getGenreNames()
         {
-            this.name = name;
-            avgScore = (byte)r.Next(0, 11);
-            // comments = new string[0];
-            comments = new ObservableCollection<string> { "Super", "Pecka", "Fuuuuj", "Mohlo být lepší" };
-            cast = new string[0];
-            genre = new string[0];
-            this.releaseDate = releaseDate;
-            titleWithYear = string.Format("{0} ({1})", name, releaseDate);
+            string tmp = "";
+            for (int i = 0; i < genre.Length; i++)
+                tmp += genre[i] + ", ";
+            return tmp;
         }
 
-        // RANDOM
-        public Movie()
+        public string getActorsNames()
         {
-            id = r.Next(0, int.MaxValue);
-            for (int i = 0; i < 100; i+=10)
-            {
-                char ch = (char)r.Next(1, i+2);
-                name += char.ToString(ch);
-            }
-            avgScore = (byte)r.Next(0,11);
-            comments = new ObservableCollection<string> { "Super", "Pecka", "Fuuuuj", "Mohlo být lepší" };
-            cast = new string[0];
-            genre = new string[0];
-            releaseDate = new DateTime(r.Next(1900, 2022), r.Next(1, 12), r.Next(1, 30));
-            titleWithYear = string.Format("{0} ({1})", name, releaseDate);
-        }
-
-        public override string ToString()
-        {
-            return string.Format(
-                "ID: {0}\nName: {1}\nAverage Score: {2}\n# of comments: {3}\n# of cast: {4}\n# of genre: {5}\nRelease Date: {6}",
-                id, name, avgScore, comments.Count, cast.Length, genre.Length, releaseDate);
+            string tmp = "";
+            for (int i = 0; i < cast.Length; i++)
+                tmp += cast[i] + ", ";
+            return tmp;
         }
     }
 }

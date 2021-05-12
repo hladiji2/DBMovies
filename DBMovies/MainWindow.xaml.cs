@@ -6,16 +6,16 @@ using System.Configuration;
 using System;
 using System.Collections.ObjectModel;
 using System.Windows.Forms;
-using DBMovies;
 using System.Windows.Controls;
 using System.Data.SqlClient;
+using MessageBox = System.Windows.Forms.MessageBox;
 
 namespace DBMovies
 {
     public partial class MainWindow : Window
     {
-        private AccessWindow accessWindow;
-        private MovieWindow movieWindow;
+        AccessWindow accessWindow;
+        MovieWindow movieWindow;
 
         private NewMovieForm f;
 
@@ -33,17 +33,42 @@ namespace DBMovies
             
             start();
         }
-
-        void start()
+        private void start()
         {
             // Skrýt hlavní okno pro autorizaci
             wasAccessed = false;
             ResizeMode = ResizeMode.NoResize;
             accessWindow = new AccessWindow(this);
-
-            //movieWindow = new MovieWindow(this);
         }
+        public  void setReports()
+        {
+            // Pouze pro admina
+            if (user.privilege == 3)
+            {
+                using (SqlConnection cnn = new SqlConnection(ConfigurationManager.ConnectionStrings["cnns0"].ConnectionString))
+                {
+                    string SELECT = "SELECT TOP 1 * FROM \"Report\"";
 
+                    SqlCommand cmd = new SqlCommand(SELECT, cnn);
+                    cnn.Open();
+
+                    using (SqlDataReader dataReader = cmd.ExecuteReader())
+                    {
+                        while (dataReader.Read())
+                        {
+                            decimal reportID = dataReader.GetDecimal(0); // ID
+                            decimal userID = dataReader.GetDecimal(1); // UserID
+                            string message = Convert.ToString(dataReader.GetValue(2)); // Message
+                            string sourceName = Convert.ToString(dataReader.GetValue(3)); // Username
+
+                            MessageBox.Show(sourceName  + " (" + "ID: " + userID + "):\n\n" + message, "ReportID: " + reportID);
+                        }
+                    }
+                    cmd.CommandText = "DELETE TOP(1) FROM \"Report\"";
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
 
         private void addMovie(object sender, RoutedEventArgs e)
         {
@@ -156,10 +181,9 @@ namespace DBMovies
 
         }
 
-        // HEAVY TODO
         private void displayMovie(object sender, SelectionChangedEventArgs args)
         {
-            new MovieWindow(this, (Movie)args.AddedItems[0]);
+            movieWindow = new MovieWindow(this, (Movie)args.AddedItems[0]);
         }
 
         public void setGuiElements()
@@ -195,12 +219,32 @@ namespace DBMovies
 
                     using (SqlDataReader dataReader = cmd.ExecuteReader())
                     {
-                        while (dataReader.Read())
+                        if (movies.Count != 0)
                         {
-                            decimal movieId = dataReader.GetDecimal(0); // ID
-                            string name = dataReader.GetString(1); // Název
-                            DateTime d = dataReader.GetDateTime(2); // Datum vydání
-                            movies.Add(new Movie(movieId,name,d));
+                            while (dataReader.Read())
+                            {
+                                decimal movieId = dataReader.GetDecimal(0); // ID
+                                string name = dataReader.GetString(1); // Název
+                                DateTime d = dataReader.GetDateTime(2); // Datum vydání
+
+                                bool exists = false;
+
+                                foreach (Movie m in movies)
+                                    if (movieId == m.id)
+                                        exists = true;
+                                if(!exists)
+                                    movies.Add(new Movie(movieId, name, d));
+                            }
+                        }
+                        else
+                        {
+                            while (dataReader.Read())
+                            {
+                                decimal movieId = dataReader.GetDecimal(0); // ID
+                                string name = dataReader.GetString(1); // Název
+                                DateTime d = dataReader.GetDateTime(2); // Datum vydání
+                                movies.Add(new Movie(movieId, name, d));
+                            }
                         }
                     }
                 }

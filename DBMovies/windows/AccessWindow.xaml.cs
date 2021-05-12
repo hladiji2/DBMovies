@@ -61,21 +61,20 @@ namespace DBMovies
                 }
                 mainWindow.txtUserLogin.Text = (string) userData.GetValue(2);
                 mainWindow.wasAccessed = true;
-                //TODO informace o uživateli pro ostatní okna
-                mainWindow.user = new User((decimal)userData.GetValue(0),(string) userData.GetValue(2) ,(decimal)userData.GetValue(3), (decimal)userData.GetValue(1));
+                //informace o uživateli pro ostatní okna
+                mainWindow.user = new User((decimal)userData.GetValue(0),(string) userData.GetValue(2) ,(decimal)userData.GetValue(3), (decimal)userData.GetValue(1), (string)userData.GetValue(4));
 
                 Hide();
                 mainWindow.setGuiElements();
-                if(mainWindow.movies.Count == 0)
-                    mainWindow.setMovies();
+                mainWindow.setMovies();
                 mainWindow.Show();
+                mainWindow.setReports();
             }
             else
             {
                 txtUserLogin.Text = "";
                 MessageBox.Show("Wrong username or password.\nPlease try again.", "FAIL");
             }
-            
         }
 
         private object[] getUserDataIfExists(string login, string password)
@@ -84,9 +83,9 @@ namespace DBMovies
             {
                 try
                 {
-                    object[] userData = new object[4];
+                    object[] userData = new object[5];
                     
-                    string SELECT = "SELECT UserID, PermissionID, Username, Karma FROM \"User\" WHERE Username='" + login + "' AND Password='" + password + "'";
+                    string SELECT = "SELECT UserID, PermissionID, Username, Karma, Name FROM \"User\" WHERE Username='" + login + "' AND Password='" + password + "'";
                    
                     SqlCommand cmd = new SqlCommand(SELECT, cnn);
                     cnn.Open();
@@ -99,6 +98,7 @@ namespace DBMovies
                             userData[1] = dataReader.GetDecimal(1); // Úroveň práv
                             userData[2] = dataReader.GetString(2); // Login
                             userData[3] = dataReader.GetDecimal(3); // Karma
+                            userData[4] = dataReader.GetString(4); // Jméno
                         }
                     }
                     return userData;
