@@ -92,7 +92,20 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>DBMoviesDataSet.xsd</DependentUpon>
     </Compile>
+    <Compile Include="forms\NewCastForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="forms\NewCastForm.Designer.cs">
+      <DependentUpon>NewCastForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="forms\NewGenreForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="forms\NewGenreForm.Designer.cs">
+      <DependentUpon>NewGenreForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="model\Cast.cs" />
+    <Compile Include="model\Genre.cs" />
     <Compile Include="windows\AccessWindow.xaml.cs">
       <DependentUpon>AccessWindow.xaml</DependentUpon>
     </Compile>
@@ -110,6 +123,9 @@
     <Compile Include="forms\NewMovieForm.Designer.cs">
       <DependentUpon>NewMovieForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="windows\InfoAdminWindow.xaml.cs">
+      <DependentUpon>InfoAdminWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="windows\MovieWindow.xaml.cs">
       <DependentUpon>MovieWindow.xaml</DependentUpon>
     </Compile>
@@ -126,6 +142,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="windows\AccessWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="windows\InfoAdminWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -148,6 +168,12 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <EmbeddedResource Include="forms\NewCastForm.resx">
+      <DependentUpon>NewCastForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="forms\NewGenreForm.resx">
+      <DependentUpon>NewGenreForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="forms\ReportForm.resx">
       <DependentUpon>ReportForm.cs</DependentUpon>
     </EmbeddedResource>

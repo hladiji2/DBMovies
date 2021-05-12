@@ -1,4 +1,7 @@
-﻿using System;
+﻿using DBMovies.forms;
+using DBMovies.windows;
+using System;
+using System.Collections.Generic;
 using System.Windows.Forms;
 
 namespace DBMovies
@@ -33,13 +36,13 @@ namespace DBMovies
             // Rok Vydání
             newMovieData[1] = getRelaseDateTime();
             // Jméno Režiséra
-            newMovieData[2] = txtDirector.Text;
+            newMovieData[2] = Convert.ToDecimal(txtDirector.Text);
 
             // KOLEKCE Herců
-            newMovieData[3] = getActorsNames();
+            newMovieData[3] = getActorIds();
 
             // KOLEKCE Žánrů
-            newMovieData[4] = getGenreNames();
+            newMovieData[4] = getGenreIds();
 
             // Předává ze současného formuláře do metody Hlavního okna
             ((MainWindow) System.Windows.Application.Current.MainWindow).registerMovie(newMovieData);
@@ -50,25 +53,44 @@ namespace DBMovies
             return new DateTime(Convert.ToInt32(release[2]), Convert.ToInt32(release[1]), Convert.ToInt32(release[0]));
         }
 
-        private string[] getActorsNames()
+        private List<decimal> getActorIds()
         {
+            List<decimal> Ids = new List<decimal>();
             string[] tmpLsActors = txtActors.Text.Split(',');
-            string[] lsActors = new string[tmpLsActors.Length];
 
             for (int i = 0; i < tmpLsActors.Length; i++)
-                lsActors[i] = tmpLsActors[i].Trim();
+                Ids.Add(Convert.ToDecimal(tmpLsActors[i].Trim()));
 
-            return lsActors;
+            return Ids;
         }
-        private string[] getGenreNames()
+        private List<decimal> getGenreIds()
         {
+            List<decimal> Ids = new List<decimal>();
             string[] tmpLsGenres = txtGenre.Text.Split(',');
-            string[] lsGenres = new string[tmpLsGenres.Length];
 
             for (int i = 0; i < tmpLsGenres.Length; i++)
-                lsGenres[i] = tmpLsGenres[i].Trim();
+                Ids.Add(Convert.ToDecimal(tmpLsGenres[i].Trim()));
 
-            return lsGenres;
+            return Ids;
+        }
+
+        private void btnHelp1_Click(object sender, EventArgs e)
+        {
+            new InfoAdminWindow("cast").Show();
+        }
+        private void btnHelp2_Click(object sender, EventArgs e)
+        {
+            new InfoAdminWindow("genre").Show();
+        }
+
+        private void btnAddGenre_Click(object sender, EventArgs e)
+        {
+            new NewGenreForm().Show();
+        }
+
+        private void btnAddCast_Click(object sender, EventArgs e)
+        {
+            new NewCastForm().Show();
         }
     }
 }

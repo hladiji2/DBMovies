@@ -256,7 +256,6 @@ namespace DBMovies
             // pokud je označený komentář, tak
             
         }
-
         private void adminReport(object sender, RoutedEventArgs e)
         {
             if (f == null)
@@ -270,7 +269,6 @@ namespace DBMovies
                 f = null;
             }
         }
-
         public void registerReport(string report)
         {
             using (SqlConnection cnn = new SqlConnection(ConfigurationManager.ConnectionStrings["cnns0"].ConnectionString))
@@ -288,7 +286,6 @@ namespace DBMovies
                 }
             }
         }
-
         public void setGuiElements()
         {
             switch (mainWindow.user.privilege)
@@ -342,7 +339,6 @@ namespace DBMovies
             }
 
         }
-
         // Metoda pro zajištění přístupu do oken
         protected override void OnClosing(CancelEventArgs e)
         {
