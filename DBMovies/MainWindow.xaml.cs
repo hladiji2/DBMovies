@@ -87,20 +87,19 @@ namespace DBMovies
         /* 
          * object[0] String     - Název Filmu
          * object[1] DateTime   - Rok Vydání
-         * object[2] String     - Název Režiséra
-         * object[3] string[]   - Názvy Herců
-         * object[4] string[]   - Názvy Žánrů
+         * object[2] String     - Název Režiséra -> ID
+         * object[3] string[]   - Názvy Herců   -> IDs
+         * object[4] string[]   - Názvy Žánrů   -> IDs
          * 
          * Volá se ve Formuláři NewMovieForm.
         */
         public void registerMovie(object[] movieData)
         {
-            // TODO INSERT INTO DATABASE
-            string nazev = (string)movieData[0];
-            DateTime rok = (DateTime)movieData[1];
-            string reziser = (string)movieData[2];
-            string[] herci = (string[])movieData[3];
-            string[] zanry = (string[])movieData[4];
+            string nazev = (string) movieData[0];
+            DateTime rok = (DateTime) movieData[1];
+            decimal reziserID = (decimal) movieData[2];
+            List<decimal> herciID = (List<decimal>) movieData[3];
+            List<decimal> zanryID = (List<decimal>) movieData[4];
             
             using (SqlConnection cnn = new SqlConnection(ConfigurationManager.ConnectionStrings["cnns0"].ConnectionString))
             {
@@ -128,41 +127,36 @@ namespace DBMovies
                     decimal movieId = Convert.ToDecimal(cmd.ExecuteScalar());
 
                     Movie m = new Movie(movieId, nazev, rok);
-                    m.director = reziser;
+
+                    cmd.CommandText = "SELECT FullName FROM \"Cast\" WHERE CastID='" + reziserID + "'";
+                    m.director = cmd.ExecuteScalar().ToString();
+
+                    string[] herci = new string[herciID.Count];
+                    for (int i = 0; i < herciID.Count; i++)
+                    {
+                        cmd.CommandText = "SELECT FullName FROM \"Cast\" WHERE CastID='" + herciID[i] + "'";
+                        herci[i] = cmd.ExecuteScalar().ToString();
+
+                        //cmd.CommandText = "INSERT INTO \"Role\" (MovieID, Name, Salary, CastID) Values ('" + movieId + "','actor','50000','" + castId + "')";
+                        //cmd.ExecuteNonQuery();
+                    }
                     m.cast = herci;
+
+                    string[] zanry = new string[zanryID.Count];
+                    for (int i = 0; i < zanryID.Count; i++)
+                    {
+                        cmd.CommandText = "SELECT Name FROM \"Genre\" WHERE GenreID='" + zanryID[i] + "'";
+                        zanry[i] = cmd.ExecuteScalar().ToString();
+
+                        cmd.CommandText = "INSERT INTO \"Genremix\" (MovieID, GenreID) Values ('" + movieId + "','" + zanryID[i] + "')";
+                        cmd.ExecuteNonQuery();
+                    }
                     m.genre = zanry;
+
+                    cmd.CommandText = "UPDATE \"Role\" SET MovieID='" + movieId + "' WHERE MovieID='0'";
+                    cmd.ExecuteNonQuery();
+
                     movies.Add(m);
-
-                    cmd.CommandText = "INSERT INTO \"Cast\" (FullName) Values ('" + reziser + "')";
-                    cmd.ExecuteNonQuery();
-                    cmd.CommandText = "SELECT CastID FROM \"Cast\" WHERE FullName='" + reziser + "'";
-                    decimal castId = Convert.ToDecimal(cmd.ExecuteScalar());
-
-                    cmd.CommandText = "INSERT INTO \"Role\" (MovieID, Name, Salary, CastID) Values ('" + movieId + "','director','130000','" + castId + "')";
-                    cmd.ExecuteNonQuery();
-                    
-                    foreach (string name in herci)
-                    {
-                        cmd.CommandText = "INSERT INTO \"Cast\" (FullName) Values ('" + name + "')";
-                        cmd.ExecuteNonQuery();
-                        cmd.CommandText = "SELECT CastID FROM \"Cast\" WHERE FullName='" + name + "'";
-                        castId = Convert.ToDecimal(cmd.ExecuteScalar());
-
-                        cmd.CommandText = "INSERT INTO \"Role\" (MovieID, Name, Salary, CastID) Values ('" + movieId + "','actor','50000','" + castId + "')";
-                        cmd.ExecuteNonQuery();
-                    }
-                    decimal genreId;
-
-                    foreach (string genre in zanry)
-                    {
-                        cmd.CommandText = "INSERT INTO \"Genre\" (Name) Values ('" + genre + "')";
-                        cmd.ExecuteNonQuery();
-                        cmd.CommandText = "SELECT GenreID FROM \"Genre\" WHERE Name='" + genre + "'";
-                        genreId = Convert.ToDecimal(cmd.ExecuteScalar());
-
-                        cmd.CommandText = "INSERT INTO \"Genremix\" (MovieID, GenreID) Values ('" + movieId + "','" + genreId + "')";
-                        cmd.ExecuteNonQuery();
-                    }
 
                     f.Dispose();
                     f = null;
@@ -174,18 +168,16 @@ namespace DBMovies
             }
         }
 
+        // TODO
         private void deleteMovie(object sender, RoutedEventArgs e)
         {
-            // TODO DELETE FROM DATABASE
             
 
         }
-
         private void displayMovie(object sender, SelectionChangedEventArgs args)
         {
             movieWindow = new MovieWindow(this, (Movie)args.AddedItems[0]);
         }
-
         public void setGuiElements()
         {
             switch (user.privilege)
@@ -254,7 +246,6 @@ namespace DBMovies
                 }
             }
         }
-
         // Metoda pro zajištění přístupu do oken
         protected override void OnClosing(CancelEventArgs e)
         {

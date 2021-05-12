@@ -11,11 +11,11 @@ namespace DBMovies
         public NewMovieForm()
         {
             InitializeComponent();
-            txtMovieName.Text = "Matrix";
-            txtReleaseDate.Text = "1.1.1999";
-            txtDirector.Text = "Wachowski";
-            txtActors.Text = "Keanu Revees, Laurence Fishburne";
-            txtGenre.Text = "Akční, Sci-fi";
+            txtMovieName.Text = "Matrix 2";
+            txtReleaseDate.Text = "1.1.2003";
+            txtDirector.Text = "12";
+            txtActors.Text = "13, 14";
+            txtGenre.Text = "3, 11";
         }
 
         private void btnRegister_Click(object sender, EventArgs e)
@@ -35,13 +35,13 @@ namespace DBMovies
             newMovieData[0] = txtMovieName.Text;
             // Rok Vydání
             newMovieData[1] = getRelaseDateTime();
-            // Jméno Režiséra
+            // ID Režiséra
             newMovieData[2] = Convert.ToDecimal(txtDirector.Text);
 
-            // KOLEKCE Herců
+            // KOLEKCE ID Herců
             newMovieData[3] = getActorIds();
 
-            // KOLEKCE Žánrů
+            // KOLEKCE ID Žánrů
             newMovieData[4] = getGenreIds();
 
             // Předává ze současného formuláře do metody Hlavního okna
