@@ -143,6 +143,7 @@ GO
 CREATE TABLE [Rating]
 (
 	[RatingID] decimal(8,0) NOT NULL IDENTITY,
+	[ReviewID] decimal(8,0) NOT NULL,
 	[Numberrating] decimal(3,0) NOT NULL
 )
 GO
@@ -151,7 +152,7 @@ CREATE TABLE [Report]
 (
 	[ReportID] decimal(8,0) NOT NULL IDENTITY,
 	[UserID] decimal(8,0) NULL,
-	[Message] varchar(256) NULL,
+	[Message] text NULL,
 	[Name] varchar(30) NULL
 )
 GO
@@ -162,7 +163,6 @@ CREATE TABLE [Review]
 	[UserID] decimal(8,0) NOT NULL,
 	[CommentID] decimal(8,0) NOT NULL,
 	[MovieID] decimal(8,0) NOT NULL,
-	[RatingID] decimal(8,0) NULL,
 	[Datecreated] datetime NOT NULL
 )
 GO
