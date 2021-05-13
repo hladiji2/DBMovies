@@ -22,7 +22,7 @@ namespace DBMovies.forms
         private void btnRegisterCast_Click(object sender, EventArgs e)
         {
             
-            if (tbFullName.Text != "" || tbSalary.Text != "")
+            if (tbFullName.Text != "")
             {
                 using (SqlConnection cnn = new SqlConnection(ConfigurationManager.ConnectionStrings["cnns0"].ConnectionString))
                 {
@@ -33,9 +33,6 @@ namespace DBMovies.forms
                         
                         SqlCommand cmd = new SqlCommand(INSERT, cnn);
 
-                        decimal id = Convert.ToDecimal(cmd.ExecuteScalar());
-
-                        cmd.CommandText = "INSERT INTO \"Role\" (MovieID, CastID, Salary, Name) values ('0','" + id + "','" + tbSalary.Text + "','" + cmbRole.SelectedItem.ToString().ToLower() + "')";
                         cmd.ExecuteNonQuery();
                     }
                     catch (SqlException b)

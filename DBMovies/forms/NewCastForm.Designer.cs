@@ -31,10 +31,6 @@ namespace DBMovies.forms
         {
             this.label1 = new System.Windows.Forms.Label();
             this.tbFullName = new System.Windows.Forms.TextBox();
-            this.cmbRole = new System.Windows.Forms.ComboBox();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.tbSalary = new System.Windows.Forms.TextBox();
             this.btnRegisterCast = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
@@ -54,45 +50,9 @@ namespace DBMovies.forms
             this.tbFullName.Size = new System.Drawing.Size(134, 20);
             this.tbFullName.TabIndex = 1;
             // 
-            // cmbRole
-            // 
-            this.cmbRole.FormattingEnabled = true;
-            this.cmbRole.Items.AddRange(new object[] {
-            "Actor",
-            "Director"});
-            this.cmbRole.Location = new System.Drawing.Point(16, 82);
-            this.cmbRole.Name = "cmbRole";
-            this.cmbRole.Size = new System.Drawing.Size(134, 21);
-            this.cmbRole.TabIndex = 2;
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(13, 66);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(43, 13);
-            this.label2.TabIndex = 3;
-            this.label2.Text = "Funkce";
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(13, 119);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(85, 13);
-            this.label3.TabIndex = 4;
-            this.label3.Text = "Plat (V dolarech)";
-            // 
-            // tbSalary
-            // 
-            this.tbSalary.Location = new System.Drawing.Point(16, 135);
-            this.tbSalary.Name = "tbSalary";
-            this.tbSalary.Size = new System.Drawing.Size(134, 20);
-            this.tbSalary.TabIndex = 5;
-            // 
             // btnRegisterCast
             // 
-            this.btnRegisterCast.Location = new System.Drawing.Point(16, 176);
+            this.btnRegisterCast.Location = new System.Drawing.Point(16, 56);
             this.btnRegisterCast.Name = "btnRegisterCast";
             this.btnRegisterCast.Size = new System.Drawing.Size(134, 23);
             this.btnRegisterCast.TabIndex = 6;
@@ -104,12 +64,8 @@ namespace DBMovies.forms
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(172, 222);
+            this.ClientSize = new System.Drawing.Size(172, 107);
             this.Controls.Add(this.btnRegisterCast);
-            this.Controls.Add(this.tbSalary);
-            this.Controls.Add(this.label3);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.cmbRole);
             this.Controls.Add(this.tbFullName);
             this.Controls.Add(this.label1);
             this.Name = "NewCastForm";
@@ -123,10 +79,6 @@ namespace DBMovies.forms
 
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox tbFullName;
-        private System.Windows.Forms.ComboBox cmbRole;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.TextBox tbSalary;
         private System.Windows.Forms.Button btnRegisterCast;
     }
 }

@@ -87,9 +87,9 @@ namespace DBMovies
         /* 
          * object[0] String     - Název Filmu
          * object[1] DateTime   - Rok Vydání
-         * object[2] String     - Název Režiséra -> ID
-         * object[3] string[]   - Názvy Herců   -> IDs
-         * object[4] string[]   - Názvy Žánrů   -> IDs
+         * object[2] String     - ID Režiséra
+         * object[3] string[]   - IDs Herců
+         * object[4] string[]   - Názvy Žánrů
          * 
          * Volá se ve Formuláři NewMovieForm.
         */
@@ -129,16 +129,19 @@ namespace DBMovies
                     Movie m = new Movie(movieId, nazev, rok);
 
                     cmd.CommandText = "SELECT FullName FROM \"Cast\" WHERE CastID='" + reziserID + "'";
-                    m.director = cmd.ExecuteScalar().ToString();
+                    m.director = Convert.ToString(cmd.ExecuteScalar());
+
+                    cmd.CommandText = "INSERT INTO \"Role\" (MovieID, CastID, Salary, Name) values ('" + movieId + "','" + reziserID + "','250000','director')";
+                    cmd.ExecuteNonQuery();
 
                     string[] herci = new string[herciID.Count];
                     for (int i = 0; i < herciID.Count; i++)
                     {
                         cmd.CommandText = "SELECT FullName FROM \"Cast\" WHERE CastID='" + herciID[i] + "'";
-                        herci[i] = cmd.ExecuteScalar().ToString();
+                        herci[i] = Convert.ToString(cmd.ExecuteScalar());
 
-                        //cmd.CommandText = "INSERT INTO \"Role\" (MovieID, Name, Salary, CastID) Values ('" + movieId + "','actor','50000','" + castId + "')";
-                        //cmd.ExecuteNonQuery();
+                        cmd.CommandText = "INSERT INTO \"Role\" (MovieID, CastID, Salary, Name) values ('" + movieId + "','" + herciID[i] + "','100000','actor')";
+                        cmd.ExecuteNonQuery();
                     }
                     m.cast = herci;
 
@@ -146,15 +149,12 @@ namespace DBMovies
                     for (int i = 0; i < zanryID.Count; i++)
                     {
                         cmd.CommandText = "SELECT Name FROM \"Genre\" WHERE GenreID='" + zanryID[i] + "'";
-                        zanry[i] = cmd.ExecuteScalar().ToString();
+                        zanry[i] = Convert.ToString(cmd.ExecuteScalar());
 
                         cmd.CommandText = "INSERT INTO \"Genremix\" (MovieID, GenreID) Values ('" + movieId + "','" + zanryID[i] + "')";
                         cmd.ExecuteNonQuery();
                     }
                     m.genre = zanry;
-
-                    cmd.CommandText = "UPDATE \"Role\" SET MovieID='" + movieId + "' WHERE MovieID='0'";
-                    cmd.ExecuteNonQuery();
 
                     movies.Add(m);
 
