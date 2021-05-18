@@ -152,8 +152,8 @@ CREATE TABLE [Report]
 (
 	[ReportID] decimal(8,0) NOT NULL IDENTITY,
 	[UserID] decimal(8,0) NULL,
-	[Message] text NULL,
-	[Name] varchar(30) NULL
+	[Message] varchar(256) NULL,
+	[Name] varchar(32) NULL
 )
 GO
 
@@ -185,7 +185,7 @@ CREATE TABLE [User]
 	[Name] varchar(50) NOT NULL,
 	[Surname] varchar(50) NOT NULL,
 	[Password] varchar(50) NOT NULL,
-	[Karma] decimal(8,0) NULL
+	[Karma] decimal(4,0) NULL
 )
 GO
 
